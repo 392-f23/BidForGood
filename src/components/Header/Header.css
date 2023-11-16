@@ -1,0 +1,17 @@
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    background-color: #4E2A84;
+    margin: 0 0 1.25rem 0;
+    padding: 0;
+    height: 4rem;
+    line-height: 4rem;
+}
+
+.logoimgbanner {
+    padding: .5rem;
+    height: 3rem;
+}
