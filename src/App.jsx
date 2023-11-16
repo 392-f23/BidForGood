@@ -11,6 +11,7 @@ const App = () => {
 
   const orgs_list = [
     {
+      "EventID": 0,
       "Name": "Evanston Animal Shelter",
       "Title": "Fall Auction Drive",
       "Description": "EAS's annual fall event benefiting golden retrievers",
@@ -18,12 +19,29 @@ const App = () => {
       "Logo": "",
       "Goal": 20000,
       "Progress": 10000,
-      "ActiveAuctions": 7,
-      "ClosedAuctions": 4,
+      "ActiveAuctions": 1,
+      "ClosedAuctions": 1,
       "StartDate": "11/20/23",
-      "EndDate": "12/01/23"
+      "EndDate": "12/01/23",
+      "Items": [
+        {
+          "Name":"Dog Toy",
+          "Image":"none",
+          "CurrentBid":20,
+          "Status":"Active",
+          "NumberBids": 6
+        },
+        {
+          "Name":"Smart Watch",
+          "Image":"none",
+          "CurrentBid":150,
+          "Status":"Closed",
+          "NumberBids": 7
+        }
+      ]
     },
     {
+      "EventID": 1,
       "Name": "Evanston Pet Shelter",
       "Title": "Fall Auction Drive",
       "Description": "EAS's annual fall event benefiting golden retrievers",
@@ -31,12 +49,29 @@ const App = () => {
       "Logo": "Logo",
       "Goal": 20000,
       "Progress": 10000,
-      "ActiveAuctions": 7,
-      "ClosedAuctions": 4,
+      "ActiveAuctions": 2,
+      "ClosedAuctions": 2,
       "StartDate": "11/20/23",
-      "EndDate": "12/01/23"
+      "EndDate": "12/01/23",
+      "Items": [
+        {
+          "Name":"Dog Toy",
+          "Image":"none",
+          "CurrentBid":20,
+          "Status":"Active",
+          "NumberBids": 6
+        },
+        {
+          "Name":"Smart Watch",
+          "Image":"none",
+          "CurrentBid":150,
+          "Status":"Closed",
+          "NumberBids": 7
+        }
+      ]
     },
     {
+      "EventID": 2,
       "Name": "Chicago Kids Shelter",
       "Title": "Fall Auction Drive",
       "Description": "EAS's annual fall event benefiting golden retrievers",
@@ -44,10 +79,26 @@ const App = () => {
       "Logo": "Logo",
       "Goal": 20000,
       "Progress": 10000,
-      "ActiveAuctions": 7,
-      "ClosedAuctions": 4,
+      "ActiveAuctions": 2,
+      "ClosedAuctions": 2,
       "StartDate": "11/20/23",
-      "EndDate": "12/01/23"
+      "EndDate": "12/01/23",
+      "Items": [
+        {
+          "Name":"Dog Toy",
+          "Image":"none",
+          "CurrentBid":20,
+          "Status":"Active",
+          "NumberBids": 6
+        },
+        {
+          "Name":"Smart Watch",
+          "Image":"none",
+          "CurrentBid":150,
+          "Status":"Closed",
+          "NumberBids": 7
+        }
+      ]
     }
   ];
 
@@ -57,7 +108,7 @@ const App = () => {
       <Container maxWidth="sm">
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={null} />
+            <Route path="/" element={<ExplorePage orgs_list={orgs_list}/>} />
             <Route path="/explore_feed" element={<ExplorePage orgs_list={orgs_list}/>} />
             <Route path="/your_bids" element={null} />
             <Route path="/profile" element={null} />
