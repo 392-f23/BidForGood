@@ -1,0 +1,72 @@
+.button-flex {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.post-item {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    text-align: start;
+}
+
+.post-top {
+    margin: 0;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-course {
+    margin-bottom: 0;
+    color: black;
+}
+
+.post-text {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    font-size: large;
+    text-align: start;
+    color: black;
+    padding-left: 8px;
+}
+
+.post-name {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    color: rgb(8, 121, 241);
+}
+
+.post-name:hover {
+    cursor: pointer;
+}
+
+.post-location {
+    color: black;
+    padding-left: 8px;
+}
+
+.post-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.post-time {
+    width: 30%;
+    text-align: right;
+    margin: 0;
+    font-size: 0.75rem;
+}
+
+.post-user {
+    margin: 10px 0px;
+    display: flex;
+    align-items: center;
+}
+
+.profile-pic {
+    margin-bottom: 0 !important;
+}

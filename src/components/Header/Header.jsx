@@ -3,8 +3,8 @@ import "./Header.css";
 const Header = () => {
   return (
     <div className="header">
-      <h1>StudyBuddy</h1>
-      <img className="logoimgbanner" src="../../../sb_logo.png" />
+      <h1>BidForGood</h1>
+      {/* <img className="logoimgbanner" src="../../../sb_logo.png" /> */}
     </div>
   );
 };
