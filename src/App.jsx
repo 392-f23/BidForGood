@@ -24,6 +24,7 @@ const App = () => {
       "ClosedAuctions": 1,
       "StartDate": "11/20/23",
       "EndDate": "12/01/23",
+      "PhoneNumber":"630-111-1234",
       "Items": [
         {
           "Name":"Dog Toy",
@@ -54,6 +55,7 @@ const App = () => {
       "ClosedAuctions": 2,
       "StartDate": "11/20/23",
       "EndDate": "12/01/23",
+      "PhoneNumber":"630-111-1234",
       "Items": [
         {
           "Name":"Dog Toy",
@@ -84,6 +86,7 @@ const App = () => {
       "ClosedAuctions": 2,
       "StartDate": "11/20/23",
       "EndDate": "12/01/23",
+      "PhoneNumber":"630-111-1234",
       "Items": [
         {
           "Name":"Dog Toy",

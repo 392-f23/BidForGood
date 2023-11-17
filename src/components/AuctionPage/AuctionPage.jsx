@@ -7,17 +7,40 @@ import PropTypes from 'prop-types';
 import LinearProgress from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import Brightness1Icon from '@mui/icons-material/Brightness1';
 
 function LinearProgressWithLabel(props) {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Box sx={{ width: '100%', mr: 1 }}>
-        <LinearProgress variant="determinate" {...props} />
+      <Box sx={{ minWidth: 35, mr: 2 }}>
+        <Typography sx={{ ml: 1, mt: 0.5 }} variant="body1" color="white">Progress</Typography>
       </Box>
-      <Box sx={{ minWidth: 35 }}>
-        <Typography variant="body2" color="text.secondary">{`${Math.round(
-          props.value,
-        )}%`}</Typography>
+      <Box sx={{ width: '100%', mr: 1, mt: 0.5 }}>
+        <Box
+          sx={{
+            width: '100%',
+            height: "1rem",
+            mr: 1,
+            bgcolor: 'rgb(255, 255, 255)',
+            display: "inline-block",
+            verticalAlign: "middle",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+        <LinearProgress sx={{
+                  backgroundColor: 'white',
+                  '& .MuiLinearProgress-bar': {
+                    backgroundColor: 'green'
+                  },
+                  ml: 0.4,
+                  mr: 1,
+                  height: "0.6rem"
+                }}
+                variant="determinate" {...props} />
+        </Box>
       </Box>
     </Box>
   );
@@ -40,9 +63,44 @@ export const AuctionPage = ({}) => {
         <div>EVENT | {auctionInfo.Title}</div>
         <div>Runs {auctionInfo.StartDate} through {auctionInfo.EndDate}</div>
         <Banner currentPage={"explore_feed"} />
+        <Box
+        sx={{
+          width: '100%',
+          height: 110,
+          borderRadius: 1,
+          bgcolor: 'rgb(17, 138, 49)',
+        }}
+      >
         <LinearProgressWithLabel value={progress}/>
-        <div>${auctionInfo.Progress} of {auctionInfo.Goal} raised</div>
-        <div>Auctions: {auctionInfo.ActiveAuctions} Active | {auctionInfo.ClosedAuctions} Closed </div>
+        <Box
+        sx={{
+          ml: "15%",
+          color: "white"
+        }}
+      >
+        <Box sx={{display: "flex",
+              flexDirection: "column",
+              alignItems: "center"}}>
+          <div>${auctionInfo.Progress} of {auctionInfo.Goal} raised</div>
+          <div>Auctions: {auctionInfo.ActiveAuctions} Active | {auctionInfo.ClosedAuctions} Closed </div>
+        </Box>
+        </Box>
+        <Box sx={{display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between"}}>
+          <Button variant="contained" sx={{width:"25%", ml: 1, fontSize: "0.75em", justifyContent: "left", backgroundColor: "rgb(42, 209, 86)"}} endIcon={<LocalPhoneIcon />}>Contact</Button>
+          <Box sx={{display: "flex",
+              flexDirection: "row",
+              alignItems: "right",
+              mr: 1,
+              mb: -3}}>
+            <Typography sx={{ mr: 0.5 }} variant="body1" color="white">LIVE</Typography>
+            <Brightness1Icon sx={{color:"red"}}/>
+          </Box>
+        </Box>
+      </Box>
+        
     </Container>
 )
 }
