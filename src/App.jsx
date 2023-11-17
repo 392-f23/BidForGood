@@ -10,7 +10,7 @@ import AuctionPage from './components/AuctionPage/AuctionPage';
 
 const App = () => {
 
-  const orgs_list = [
+  const aucs_list = [
     {
       "EventID": 0,
       "Name": "Evanston Animal Shelter",
@@ -109,8 +109,8 @@ const App = () => {
       <Container maxWidth="sm">
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<ExplorePage orgs_list={orgs_list}/>} />
-            <Route path="/explore_feed" element={<ExplorePage orgs_list={orgs_list}/>} />
+            <Route path="/" element={<ExplorePage aucs_list={aucs_list}/>} />
+            <Route path="/explore_feed" element={<ExplorePage aucs_list={aucs_list}/>} />
             <Route path="/your_bids" element={null} />
             <Route path="/auction_page" element={<AuctionPage />} />
             <Route path="/profile" element={null} />

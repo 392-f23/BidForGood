@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 import "./AuctionCard.css";
 import { useNavigate } from "react-router-dom";
 
-export const AuctionCard = ({orgInfo}) => {
+export const AuctionCard = ({auctionInfo}) => {
   const Item = styled(Paper)(({ theme }) => ({
       backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
       ...theme.typography.body2,
@@ -20,26 +20,26 @@ export const AuctionCard = ({orgInfo}) => {
   };
 
   return (
-    <Item onClick={() => handleClick(orgInfo)} className="post-item">
+    <Item onClick={() => handleClick(auctionInfo)} className="post-item">
       <div className="post-header">
         <h2 className="post-top">
-          <div className="post-title"> {orgInfo.Name} </div>
+          <div className="post-title"> {auctionInfo.Name} </div>
         </h2>
         <h3>
-            {orgInfo.Title}
+            {auctionInfo.Title}
         </h3>
         <div className="post-user">
           <Avatar
             className="profile-pic"
             sx={{ width: 25, height: 25, marginBottom: ".5rem" }}
-            src={orgInfo.Logo ? orgInfo.Logo : ""}
+            src={auctionInfo.Logo ? auctionInfo.Logo : ""}
           ></Avatar>
         </div>
       </div>
-      <p className="post-text">{orgInfo.Description}</p>
+      <p className="post-text">{auctionInfo.Description}</p>
       
       <p className="post-location">
-        <b>Active Auctions</b>: {orgInfo.ActiveAuctions}
+        <b>Active Auctions</b>: {auctionInfo.ActiveAuctions}
       </p>
     </Item>
   )

@@ -5,19 +5,19 @@ import Banner from "../Banner/Banner";
 import { AuctionCard } from "../AuctionCard/AuctionCard";
 import './ExplorePage.css'
 
-const ExplorePage = ({orgs_list}) => {
+const ExplorePage = ({aucs_list}) => {
 
 
     return (
         <Container>
             <Container maxWidth="sm">
                 <Stack spacing={2} className="feed-stack">
-                    {orgs_list &&
-                        Object.values(orgs_list)
+                    {aucs_list &&
+                        Object.values(aucs_list)
                             .map((item, index) => (
                                 <AuctionCard
                                     key={index}
-                                    orgInfo={item}/>
+                                    auctionInfo={item}/>
                             ))}
                 </Stack>
             </Container>
