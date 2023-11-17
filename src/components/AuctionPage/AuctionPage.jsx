@@ -25,7 +25,6 @@ function LinearProgressWithLabel(props) {
             bgcolor: 'rgb(255, 255, 255)',
             display: "inline-block",
             verticalAlign: "middle",
-            display: "flex",
             flexDirection: "column",
             justifyContent: "center",
           }}

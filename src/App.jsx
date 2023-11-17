@@ -7,6 +7,8 @@ import Header from "./components/Header/Header"
 import Banner from "./components/Banner/Banner"
 import ExplorePage from './components/ExplorePage/ExplorePage';
 import AuctionPage from './components/AuctionPage/AuctionPage';
+import ProfilePage from './components/ProfilePage/ProfilePage';
+import YourBids from './components/YourBids/YourBids';
 
 const App = () => {
 
@@ -114,9 +116,9 @@ const App = () => {
           <Routes>
             <Route path="/" element={<ExplorePage aucs_list={aucs_list}/>} />
             <Route path="/explore_feed" element={<ExplorePage aucs_list={aucs_list}/>} />
-            <Route path="/your_bids" element={null} />
+            <Route path="/your_bids" element={<YourBids />} />
             <Route path="/auction_page" element={<AuctionPage />} />
-            <Route path="/profile" element={null} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Routes>
         </BrowserRouter>
       </Container>
