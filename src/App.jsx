@@ -6,6 +6,7 @@ import { Container } from "@mui/material";
 import Header from "./components/Header/Header"
 import Banner from "./components/Banner/Banner"
 import ExplorePage from './components/ExplorePage/ExplorePage';
+import AuctionPage from './components/AuctionPage/AuctionPage';
 
 const App = () => {
 
@@ -111,6 +112,7 @@ const App = () => {
             <Route path="/" element={<ExplorePage orgs_list={orgs_list}/>} />
             <Route path="/explore_feed" element={<ExplorePage orgs_list={orgs_list}/>} />
             <Route path="/your_bids" element={null} />
+            <Route path="/auction_page" element={<AuctionPage />} />
             <Route path="/profile" element={null} />
           </Routes>
         </BrowserRouter>

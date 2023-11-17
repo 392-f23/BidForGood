@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Container } from "@mui/material";
 import { Stack } from "@mui/system";
 import Banner from "../Banner/Banner";
-import { OrgCard } from "../OrgCard/OrgCard";
+import { AuctionCard } from "../AuctionCard/AuctionCard";
 import './ExplorePage.css'
 
 const ExplorePage = ({orgs_list}) => {
@@ -15,7 +15,7 @@ const ExplorePage = ({orgs_list}) => {
                     {orgs_list &&
                         Object.values(orgs_list)
                             .map((item, index) => (
-                                <OrgCard
+                                <AuctionCard
                                     key={index}
                                     orgInfo={item}/>
                             ))}
