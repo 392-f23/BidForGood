@@ -1,0 +1,10 @@
+.hometext {
+    color: rgb(47, 132, 42);
+}
+
+.continuelink {
+    margin-top: 3rem;
+    text-decoration: none;
+    color: rgb(47, 132, 42);
+    cursor: pointer;
+}

@@ -1,14 +1,12 @@
-import { useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Container } from "@mui/material";
 import Header from "./components/Header/Header"
-import Banner from "./components/Banner/Banner"
 import ExplorePage from './components/ExplorePage/ExplorePage';
 import AuctionPage from './components/AuctionPage/AuctionPage';
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import YourBids from './components/YourBids/YourBids';
+import HomePage from './components/HomePage/HomePage';
 
 const App = () => {
 
@@ -114,7 +112,7 @@ const App = () => {
       <Container maxWidth="sm">
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<ExplorePage aucs_list={aucs_list}/>} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/explore_feed" element={<ExplorePage aucs_list={aucs_list}/>} />
             <Route path="/your_bids" element={<YourBids />} />
             <Route path="/auction_page" element={<AuctionPage />} />
