@@ -5,7 +5,7 @@ import "./AuctionCard.css";
 import { useNavigate } from "react-router-dom";
 import { LinearProgressWithLabel } from '../ProgressBar/ProgressBar';
 
-export const AuctionCard = ({auctionInfo}) => {
+export const AuctionCard = ({auctionInfo, handleOpenDescription,}) => {
   const Item = styled(Paper)(({ theme }) => ({
       backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#abebbc",
       ...theme.typography.body2,
@@ -23,7 +23,7 @@ export const AuctionCard = ({auctionInfo}) => {
   const progress = auctionInfo.Progress / auctionInfo.Goal * 100;
 
   return (
-    <Item className="post-item">
+    <Item onClick={handleOpenDescription} className="post-item">
       <div className='left-div'>
         <h2 className="post-title"> {auctionInfo.Title} </h2>
         <div className='org-div'>
