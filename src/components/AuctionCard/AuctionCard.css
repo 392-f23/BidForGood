@@ -4,13 +4,6 @@
     width: 100%;
 }
 
-.post-item {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    text-align: start;
-}
-
 .post-top {
     margin: 0;
     color: black;
@@ -21,15 +14,6 @@
 .post-course {
     margin-bottom: 0;
     color: black;
-}
-
-.post-text {
-    margin-top: 0.5rem;
-    margin-bottom: 0;
-    font-size: large;
-    text-align: start;
-    color: black;
-    padding-left: 8px;
 }
 
 .post-name {
@@ -61,12 +45,55 @@
     font-size: 0.75rem;
 }
 
-.post-user {
-    margin: 10px 0px;
+.post-item {
+    display: flex;
+}
+
+.left-div {
+    /* border: 3px solid red; */
+    flex: 2
+}
+
+.right-div {
+    flex: 1;
     display: flex;
     align-items: center;
+    justify-content: end;
+    /* border: 3px solid hotpink; */
+}
+
+.post-title {
+    color: black;
+    margin: 0;
+    padding: 0;
+}
+
+.org-div {
+    margin: 0px 0px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    /* border: 3px solid firebrick; */
+}
+
+.org-div h3 {
+    margin: 0;
+    padding: 0;
 }
 
 .profile-pic {
     margin-bottom: 0 !important;
+    margin-right: 10px;
+}
+
+.post-text {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    font-size: medium;
+    text-align: start;
+    color: black;
+}
+
+.enter-button {
+    height: 30%;
 }
