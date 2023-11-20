@@ -9,7 +9,7 @@ const YourBids = () => {
         <h2>Your Bids</h2>
         <div>Rest of Your Bids Info</div>
       </Stack>
-      <Banner currentPage={"profile"} />
+      <Banner currentPage={"your_bids"} />
     </Container>
   );
 };
