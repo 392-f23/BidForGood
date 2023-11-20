@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container, Paper, Button, Chip, Avatar } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import "./AuctionCard.css";
@@ -10,8 +10,16 @@ import teddy from '../../images/teddy.jpg';
 import trip from '../../images/trip.jpeg';
 
 export const AuctionCard = ({ auctionInfo, handleOpenDescription, }) => {
-  const [auctionImages, setauctionImages] = useState([car, teddy, trip]);
+
+  let images = auctionInfo.Items.map(x=> x.Image)
+  const [auctionImages, setAuctionImages] = useState(images);
   const [current, setCurrent] = useState(0);
+
+  useEffect(()=> {
+    if (auctionInfo.Items){
+    setAuctionImages(auctionInfo.Items.map(x=> x.Image))
+    }
+  }, [auctionInfo])
 
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#abebbc",
@@ -44,6 +52,9 @@ export const AuctionCard = ({ auctionInfo, handleOpenDescription, }) => {
       setCurrent(curr);
     }
   };
+
+  console.log(auctionImages, auctionInfo.Name, auctionInfo)
+
 
   return (
     <Item className="post-item">

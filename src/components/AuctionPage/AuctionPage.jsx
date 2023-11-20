@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Container } from "@mui/material";
+import { Button, Container, Input } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useLocation } from "react-router-dom";
 import Banner from "../Banner/Banner";
@@ -13,6 +13,7 @@ import { AuctionItemCard } from "../AuctionItemCard/AuctionItemCard";
 import InfoDialog from '../Dialog/Dialog';
 import DialogContentText from '@mui/material/DialogContentText';
 import { useState } from "react";
+import { auctionItemData } from "../../data/auctionItems";
 
 function LinearProgressWithLabel(props) {
   return (
@@ -172,7 +173,7 @@ const AuctionPage = () => {
       </Box>
 
       <Stack gap={2}>
-        <AuctionItemCard handleOpenBid={handleClickOpenBid} />
+       {auctionItemData[auctionInfo.EventID].map(x=> <AuctionItemCard handleOpenBid={handleClickOpenBid} title={x.Name} currentBid={x.CurrentBid} numberOfBids={x.NumberBids} itemImage={x.Image}/>)}
       </Stack>
     </Container>
   );
