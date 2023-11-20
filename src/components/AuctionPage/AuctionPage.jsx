@@ -1,43 +1,49 @@
-import React from 'react'
+import React from "react";
 import { Button, Container } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useLocation } from "react-router-dom";
 import Banner from "../Banner/Banner";
-import PropTypes from 'prop-types';
-import LinearProgress from '@mui/material/LinearProgress';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
-import Brightness1Icon from '@mui/icons-material/Brightness1';
+import PropTypes from "prop-types";
+import LinearProgress from "@mui/material/LinearProgress";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import Brightness1Icon from "@mui/icons-material/Brightness1";
+import { AuctionItemCard } from "../AuctionItemCard/AuctionItemCard";
 
 function LinearProgressWithLabel(props) {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    <Box sx={{ display: "flex", alignItems: "center" }}>
       <Box sx={{ minWidth: 35, mr: 2 }}>
-        <Typography sx={{ ml: 1, mt: 0.5 }} variant="body1" color="white">Progress</Typography>
+        <Typography sx={{ ml: 1, mt: 0.5 }} variant="body1" color="white">
+          Progress
+        </Typography>
       </Box>
-      <Box sx={{ width: '100%', mr: 1, mt: 0.5 }}>
+      <Box sx={{ width: "100%", mr: 1, mt: 0.5 }}>
         <Box
           sx={{
-            width: '100%',
+            width: "100%",
             height: "1rem",
             mr: 1,
-            bgcolor: 'rgb(255, 255, 255)',
+            bgcolor: "rgb(255, 255, 255)",
             verticalAlign: "middle",
             flexDirection: "column",
             justifyContent: "center",
           }}
         >
-        <LinearProgress sx={{
-                  backgroundColor: 'white',
-                  '& .MuiLinearProgress-bar': {
-                    backgroundColor: 'green'
-                  },
-                  ml: 0.4,
-                  mr: 1,
-                  height: "0.6rem"
-                }}
-                variant="determinate" {...props} />
+          <LinearProgress
+            sx={{
+              backgroundColor: "white",
+              "& .MuiLinearProgress-bar": {
+                backgroundColor: "green",
+              },
+              ml: 0.4,
+              mr: 1,
+              height: "0.6rem",
+            }}
+            variant="determinate"
+            {...props}
+          />
         </Box>
       </Box>
     </Box>
@@ -54,53 +60,95 @@ LinearProgressWithLabel.propTypes = {
 export const AuctionPage = ({}) => {
   const auctionInfo = useLocation().state;
   console.log(auctionInfo);
-  const [progress, setProgress] = React.useState(auctionInfo.Progress / auctionInfo.Goal * 100);
+  const [progress, setProgress] = React.useState(
+    (auctionInfo.Progress / auctionInfo.Goal) * 100
+  );
   return (
     <Container>
-        <div>{auctionInfo.Name}</div>
-        <div>EVENT | {auctionInfo.Title}</div>
-        <div>Runs {auctionInfo.StartDate} through {auctionInfo.EndDate}</div>
-        <Banner currentPage={"explore_feed"} />
-        <Box
+      <Stack gap={1} style={{ textAlign: "center", marginBottom: 20 }}>
+        <h2 style={{ marginBottom: 0, marginTop: 0 }}>{auctionInfo.Name}</h2>
+        <div>EVENT | {auctionInfo.Title.toUpperCase()}</div>
+        <div>
+          Runs {auctionInfo.StartDate} through {auctionInfo.EndDate}
+        </div>
+      </Stack>
+
+      <Banner currentPage={"explore_feed"} />
+
+      <Box
         sx={{
-          width: '100%',
+          width: "100%",
           height: 110,
           borderRadius: 1,
-          bgcolor: 'rgb(17, 138, 49)',
+          bgcolor: "rgb(17, 138, 49)",
         }}
       >
-        <LinearProgressWithLabel value={progress}/>
+        <LinearProgressWithLabel value={progress} />
         <Box
-        sx={{
-          ml: "15%",
-          color: "white"
-        }}
-      >
-        <Box sx={{display: "flex",
+          sx={{
+            ml: "15%",
+            color: "white",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
               flexDirection: "column",
-              alignItems: "center"}}>
-          <div>${auctionInfo.Progress} of {auctionInfo.Goal} raised</div>
-          <div>Auctions: {auctionInfo.ActiveAuctions} Active | {auctionInfo.ClosedAuctions} Closed </div>
-        </Box>
-        </Box>
-        <Box sx={{display: "flex",
-              flexDirection: "row",
               alignItems: "center",
-              justifyContent: "space-between"}}>
-          <Button variant="contained" sx={{width:"25%", ml: 1, fontSize: "0.75em", justifyContent: "left", backgroundColor: "rgb(42, 209, 86)"}} endIcon={<LocalPhoneIcon />}>Contact</Button>
-          <Box sx={{display: "flex",
+            }}
+          >
+            <div>
+              ${auctionInfo.Progress} of {auctionInfo.Goal} raised
+            </div>
+            <div>
+              Auctions: {auctionInfo.ActiveAuctions} Active |{" "}
+              {auctionInfo.ClosedAuctions} Closed{" "}
+            </div>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Button
+            variant="contained"
+            sx={{
+              width: "25%",
+              ml: 1,
+              fontSize: "0.75em",
+              justifyContent: "left",
+              backgroundColor: "rgb(42, 209, 86)",
+            }}
+            endIcon={<LocalPhoneIcon />}
+          >
+            Contact
+          </Button>
+          <Box
+            sx={{
+              display: "flex",
               flexDirection: "row",
               alignItems: "right",
               mr: 1,
-              mb: -3}}>
-            <Typography sx={{ mr: 0.5 }} variant="body1" color="white">LIVE</Typography>
-            <Brightness1Icon sx={{color:"red"}}/>
+              mb: -3,
+            }}
+          >
+            <Typography sx={{ mr: 0.5 }} variant="body1" color="white">
+              LIVE
+            </Typography>
+            <Brightness1Icon sx={{ color: "red" }} />
           </Box>
         </Box>
       </Box>
-        
+
+      <Stack gap={2}>
+        <AuctionItemCard />
+      </Stack>
     </Container>
-)
-}
+  );
+};
 
 export default AuctionPage;
