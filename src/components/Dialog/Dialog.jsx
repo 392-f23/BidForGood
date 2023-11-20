@@ -19,7 +19,7 @@ export default function InfoDialog({ children, title, open, handleClose }) {
                 {children}
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose} autoFocus>
+                <Button className="mui-dialog-btn" onClick={handleClose} autoFocus>
                     Close
                 </Button>
             </DialogActions>

@@ -28,7 +28,7 @@ export const auctionItemData = {
         { "Name": "Toy Train Playset", "CurrentBid": 20, "NumberBids": 5, "Image": "https://i5.walmartimages.com/seo/Toy-Train-Set-Kids-Battery-Operated-Sounds-Lights-Santa-Claus-Christmas-Holiday-Under-The-Tree-Great-Gift-Idea-Boys-Girls-Toddlers_91838d3a-8761-4a1c-b14d-665df35f0523.51f076548d698acd214462c678b3212b.jpeg", "Status": "Active" },
         { "Name": "Interactive Learning Tablet", "CurrentBid": 30, "NumberBids": 10, "Image": "https://m.media-amazon.com/images/I/81OLBhCiZ6L.jpg", "Status": "Active" },
         { "Name": "Art Supplies Kit", "CurrentBid": 15, "NumberBids": 8, "Image": "https://i5.walmartimages.com/seo/Triani-150Pcs-Kids-Art-Supplies-Portable-Painting-Drawing-Kit-Oil-Pastels-Crayons-Colored-Pencils-Watercolor-Pens-Set-Girls-Boys-Teens-3-12_2f6f765f-a356-438e-9e6b-7f176893a6f5.b6db73640d95587aa4ea7669ee1866fb.jpeg", "Status": "Active" },
-        { "Name": "Outdoor Adventure Backpack", "CurrentBid": 35, "NumberBids": 12, "Image": "https://i.ebayimg.com/images/g/CAIAAOSwo2digslq/s-l1200.webp", "Status": "Active" },
+        { "Name": "Outdoor Adventure Backpack", "CurrentBid": 35, "NumberBids": 12, "Image": "https://i0.wp.com/www.backpackoutpost.com/wp-content/uploads/2020/10/I41vlGkLpGL.jpg?resize=500%2C496&ssl=1", "Status": "Active" },
         { "Name": "Superhero Costume Set", "CurrentBid": 28, "NumberBids": 9, "Status": "Active" },
         { "Name": "Board Game Bundle", "CurrentBid": 22, "NumberBids": 6, "Status": "Active" },
         { "Name": "Musical Instrument Kit", "CurrentBid": 40, "NumberBids": 15, "Status": "Active" },

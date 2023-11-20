@@ -1,0 +1,17 @@
+.auction-item-card {
+    margin-top: 2rem;
+}
+
+.card-img-container {
+    position: relative;
+    /* height: 100%; */
+    width: 100%;
+    max-width: 100%;
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+    object-position: center;
+}
