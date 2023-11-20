@@ -15,7 +15,8 @@
 
 .left-div {
     /* border: 3px solid red; */
-    flex: 2
+    flex: 2;
+    margin-right: 10px;
 }
 
 .right-div {

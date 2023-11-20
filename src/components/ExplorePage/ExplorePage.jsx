@@ -8,9 +8,9 @@ import InfoDialog from '../Dialog/Dialog';
 import DialogContentText from '@mui/material/DialogContentText';
 import './ExplorePage.css'
 import { SearchBar } from '../SearchBar/SearchBar';
-import { useState } from "react";
 
 const ExplorePage = ({ aucs_list }) => {
+    const [filteredAuctions, setFilteredAuctions] = useState(aucs_list);
     const [description, SetDescription] = useState("");
     const [openDescription, setOpenDescription] = useState(false);
 
