@@ -23,7 +23,6 @@ function LinearProgressWithLabel(props) {
             height: "1rem",
             mr: 1,
             bgcolor: 'rgb(255, 255, 255)',
-            display: "inline-block",
             verticalAlign: "middle",
             flexDirection: "column",
             justifyContent: "center",
