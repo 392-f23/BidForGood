@@ -1,11 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { useEffect, useState, useCallback } from "react";
-import {
-  getDatabase,
-  onValue,
-  ref,
-  update,
-} from "firebase/database";
+import { getDatabase, onValue, ref, update } from "firebase/database";
 import {
   getAuth,
   signInWithPopup,
@@ -14,13 +9,13 @@ import {
 } from "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDn9dI-uN2fB7TsW8dgxxztu0aDRX2Na2Y",
-    authDomain: "bidforgoodapp.firebaseapp.com",
-    projectId: "bidforgoodapp",
-    storageBucket: "bidforgoodapp.appspot.com",
-    messagingSenderId: "923695299501",
-    appId: "1:923695299501:web:1f6a8572dbf8eee90dff24"
-  };
+  apiKey: "AIzaSyDn9dI-uN2fB7TsW8dgxxztu0aDRX2Na2Y",
+  authDomain: "bidforgoodapp.firebaseapp.com",
+  projectId: "bidforgoodapp",
+  storageBucket: "bidforgoodapp.appspot.com",
+  messagingSenderId: "923695299501",
+  appId: "1:923695299501:web:1f6a8572dbf8eee90dff24",
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

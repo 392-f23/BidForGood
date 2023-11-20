@@ -1,0 +1,67 @@
+{
+    "organizations": {
+        "Evanston Animal Shelter": {
+        "Website": "http://evanstonanimalshelter.net/",
+        "Logo": ""
+        },
+        "Fabretto Children's Foundation": {
+        "Website": "https://fabretto.org/",
+        "Logo": ""
+        },
+        "Care For Real": {
+        "Website": "https://careforreal.org/",
+        "Logo": ""
+        }
+    },
+    "auctions": {
+      "5463cdac-2b6b-4eb9-86cd-eaf527b4abff": {
+        "Organization": "Evanston Animal Shelter",
+        "AuctionName": "Fall Auction Drive",
+        "Description": "EAS's annual fall event benefiting golden retrievers",
+        "Goal": 20000,
+        "TotalRaised": 10000,
+        "ActiveAuctions": 1,
+        "ClosedAuctions": 1,
+        "StartDate": "11/20/23",
+        "EndDate": "12/01/23",
+        "PhoneNumber": "630-111-1234"
+      }
+    },
+    "listings": {
+      "f43b53e1-1c01-44fd-966f-69d9b5121a02": {
+        "Name": "Cozy Pet Bed",
+        "AuctionId": "5463cdac-2b6b-4eb9-86cd-eaf527b4abff",
+        "CurrentBid": 30,
+        "NumberBids": 8,
+        "Image":
+          "https://paradissvp.com/cdn/shop/products/f5e01c19eae46f92df201e1a34d3fdb0_550x.jpg?v=1615695220",
+        "Status": "Active"
+      },
+      "c9053303-7005-4ec1-ba1c-c112a7bc0347": {
+        "Name": "Paw Print Artwork",
+        "AuctionId": "5463cdac-2b6b-4eb9-86cd-eaf527b4abff",
+        "CurrentBid": 20,
+        "NumberBids": 5,
+        "Image":
+          "https://www.flutterbyeprints.com/cdn/shop/products/Paw_print_in_frame_white_brick_wall_0f663d48-6cbd-4f26-8cb0-939b6784dbf3.jpg?v=1609870897",
+        "Status": "Active"
+      },
+      "3d903bcf-b0bd-47b3-9560-96a9f3f02467": {
+        "Name": "Interactive Cat Toy Set",
+        "AuctionId": "5463cdac-2b6b-4eb9-86cd-eaf527b4abff",
+        "CurrentBid": 15,
+        "NumberBids": 10,
+        "Image": "https://m.media-amazon.com/images/I/81RZWGYhDfL.jpg",
+        "Status": "Active"
+      },
+      "5605534e-f69d-45ed-b744-c5d66c7bdc7f": {
+        "Name": "Dog Grooming Voucher",
+        "AuctionId": "5463cdac-2b6b-4eb9-86cd-eaf527b4abff",
+        "CurrentBid": 40,
+        "NumberBids": 12,
+        "Image":
+          "https://spiritdogtraining.com/wp-content/uploads/2021/03/how-long-does-grooming-take.jpg",
+        "Status": "Active"
+      }
+    }
+}
