@@ -63,6 +63,7 @@
 .description-link {
     font-size: small;
     color: green;
+    cursor: pointer;
 }
 
 .description-link:hover {
