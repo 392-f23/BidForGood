@@ -2,11 +2,10 @@ import { useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
+import { auctionItemData } from '../../data/auctionItems';
 
 
-export const SearchBar = ({setFilteredAuctions,aucs_list}) => {
-    
-    
+export const SearchBar = ({setFilteredAuctions, aucs_list}) => {
     return ( 
     <div>
     <TextField
@@ -14,7 +13,10 @@ export const SearchBar = ({setFilteredAuctions,aucs_list}) => {
     className="text"
     onInput={(e) => {
     //console.log(aucs_list)
-    const filteredAuctions = aucs_list .filter(item => item.Name.toLowerCase().includes(e.target.value.toLowerCase()));
+    const filteredAuctions = aucs_list.filter(auction => (
+      auction.Name.toLowerCase().includes(e.target.value.toLowerCase()) || 
+      auction.Title.toLowerCase().includes(e.target.value.toLowerCase())
+      ));
     //console.log("go search!!!"+JSON.stringify(filteredAuctions))
     setFilteredAuctions(filteredAuctions)
     }}

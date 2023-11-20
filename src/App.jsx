@@ -25,84 +25,39 @@ const App = () => {
       "StartDate": "11/20/23",
       "EndDate": "12/01/23",
       "PhoneNumber":"630-111-1234",
-      "Items": [
-        {
-          "Name":"Dog Toy",
-          "Image":"none",
-          "CurrentBid":20,
-          "Status":"Active",
-          "NumberBids": 6
-        },
-        {
-          "Name":"Smart Watch",
-          "Image":"none",
-          "CurrentBid":150,
-          "Status":"Closed",
-          "NumberBids": 7
-        }
-      ]
+      "Items": 0
     },
     {
       "EventID": 1,
-      "Name": "Evanston Pet Shelter",
-      "Title": "Fall Auction Drive",
-      "Description": "EAS's annual fall event benefiting golden retrievers",
-      "Link": "eas.org",
+      "Name": "NU Dance Marathon",
+      "Title": "NUDM Auction for Action",
+      "Description": "Let's raise money for this charity.",
+      "Link": "nudm.org",
       "Logo": "Logo",
-      "Goal": 20000,
-      "Progress": 10000,
-      "ActiveAuctions": 2,
-      "ClosedAuctions": 2,
+      "Goal": 5000,
+      "Progress": 3000,
+      "ActiveAuctions": 9,
+      "ClosedAuctions": 4,
       "StartDate": "11/20/23",
-      "EndDate": "12/01/23",
+      "EndDate": "12/20/23",
       "PhoneNumber":"630-111-1234",
-      "Items": [
-        {
-          "Name":"Dog Toy",
-          "Image":"none",
-          "CurrentBid":20,
-          "Status":"Active",
-          "NumberBids": 6
-        },
-        {
-          "Name":"Smart Watch",
-          "Image":"none",
-          "CurrentBid":150,
-          "Status":"Closed",
-          "NumberBids": 7
-        }
-      ]
+      "Items": 1
     },
     {
       "EventID": 2,
       "Name": "Chicago Kids Shelter",
-      "Title": "Fall Auction Drive",
-      "Description": "EAS's annual fall event benefiting golden retrievers",
-      "Link": "eas.org",
+      "Title": "Textbooks for Tots",
+      "Description": "Raising money for Chicago kids' continued education.",
+      "Link": "cks.org",
       "Logo": "Logo",
-      "Goal": 20000,
-      "Progress": 10000,
+      "Goal": 15000,
+      "Progress": 14500,
       "ActiveAuctions": 2,
-      "ClosedAuctions": 2,
+      "ClosedAuctions": 12,
       "StartDate": "11/20/23",
-      "EndDate": "12/01/23",
+      "EndDate": "01/01/24",
       "PhoneNumber":"630-111-1234",
-      "Items": [
-        {
-          "Name":"Dog Toy",
-          "Image":"none",
-          "CurrentBid":20,
-          "Status":"Active",
-          "NumberBids": 6
-        },
-        {
-          "Name":"Smart Watch",
-          "Image":"none",
-          "CurrentBid":150,
-          "Status":"Closed",
-          "NumberBids": 7
-        }
-      ]
+      "Items": 2
     }
   ];
 

@@ -1,7 +1,11 @@
-.dialog-box {
-    border: 3px solid olivedrab;
-}
-
 .dialog-content {
     width: 400px;
+}
+
+.mui-dialog-btn {
+    color: green !important;
+}
+
+.mui-dialog-btn:hover {
+    color: darkgreen !important;
 }

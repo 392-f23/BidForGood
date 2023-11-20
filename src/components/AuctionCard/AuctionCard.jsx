@@ -1,17 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container, Paper, Button, Chip, Avatar } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import "./AuctionCard.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LinearProgressWithLabel } from '../ProgressBar/ProgressBar';
 import ImageSlider from '../ImageSlider/ImageSlider';
+import { auctionItemData } from '../../data/auctionItems';
 import car from '../../images/car.jpg';
 import teddy from '../../images/teddy.jpg';
 import trip from '../../images/trip.jpeg';
 
 export const AuctionCard = ({ auctionInfo, handleOpenDescription, }) => {
-  const [auctionImages, setauctionImages] = useState([car, teddy, trip]);
+
+  // let images = auctionItemData[auctionInfo.Items].map(x => x.Image);
+  // console.log(images);
+  const [auctionImages, setAuctionImages] = useState([]);
   const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    if ("Items" in auctionInfo) {
+      let images = auctionItemData[auctionInfo.Items].map(x => x.Image).filter(x => x != null);
+      setAuctionImages(images);
+    }
+  }, [auctionInfo])
 
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#abebbc",
@@ -45,6 +56,9 @@ export const AuctionCard = ({ auctionInfo, handleOpenDescription, }) => {
     }
   };
 
+  // console.log(auctionImages, auctionInfo.Name, auctionInfo)
+
+
   return (
     <Item className="post-item">
       <div className='post-info'>
@@ -62,24 +76,26 @@ export const AuctionCard = ({ auctionInfo, handleOpenDescription, }) => {
           <p className='post-text'>Starts: {auctionInfo.StartDate} </p>
           <p className='post-text'>Ends: {auctionInfo.EndDate} </p>
           <div>
-            <LinearProgressWithLabel value={progress} />
+            <LinearProgressWithLabel value={progress} darkMode={false}/>
             <p className='post-text'> ${auctionInfo.Progress} / ${auctionInfo.Goal}</p>
           </div>
           <p className='post-text'>Active Auctions: {auctionInfo.ActiveAuctions}</p>
         </div>
-        <div className='right-div'>
-          <ImageSlider
-            imagePath={auctionImages[current]}
-            onRightClick={nextSlide}
-            onLeftClick={prevSlide}
-            arrows={auctionImages.length > 1} />
-        </div>
-        </div>
-        <div className='bottom-div'>
-          <Button className='enter-button' variant="contained" onClick={() => handleClick(auctionInfo)}>
-            Enter
-          </Button>
-        </div>
+        {auctionImages.length > 0 &&
+          <div className='right-div'>
+            <ImageSlider
+              imagePath={auctionImages[current]}
+              onRightClick={nextSlide}
+              onLeftClick={prevSlide} 
+              arrows={auctionImages.length > 1} />
+          </div>
+        }
+      </div>
+      <div className='bottom-div'>
+        <Button className='enter-button mui-btn' variant="contained" onClick={() => handleClick(auctionInfo)}>
+          Enter
+        </Button>
+      </div>
     </Item>
   )
 }
