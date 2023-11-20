@@ -2,7 +2,7 @@ import { Button, Card, Grid, Stack } from "@mui/material";
 import React from "react";
 import teddy from '../../images/teddy.jpg';
 
-export const AuctionItemCard = () => {
+export const AuctionItemCard = ({ handleOpenBid }) => {
   return (
     <Card style={{padding: 20}}>
       <Grid container spacing={2}>
@@ -15,7 +15,7 @@ export const AuctionItemCard = () => {
             <div style={{fontWeight: "bold"}}>Samsung Galaxy </div>
             <div>Current bid: $128  </div>
             <div># of bids: 11 </div>
-            <Button variant="contained">
+            <Button variant="contained" onClick={handleOpenBid}>
                 Place bid
             </Button>
             </Stack>

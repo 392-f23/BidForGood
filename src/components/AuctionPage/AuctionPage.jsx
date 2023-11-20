@@ -10,6 +10,9 @@ import Box from "@mui/material/Box";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import Brightness1Icon from "@mui/icons-material/Brightness1";
 import { AuctionItemCard } from "../AuctionItemCard/AuctionItemCard";
+import InfoDialog from '../Dialog/Dialog';
+import DialogContentText from '@mui/material/DialogContentText';
+import { useState } from "react";
 
 function LinearProgressWithLabel(props) {
   return (
@@ -57,14 +60,38 @@ LinearProgressWithLabel.propTypes = {
    */
   value: PropTypes.number.isRequired,
 };
-export const AuctionPage = ({}) => {
+const AuctionPage = () => {
   const auctionInfo = useLocation().state;
   console.log(auctionInfo);
   const [progress, setProgress] = React.useState(
     (auctionInfo.Progress / auctionInfo.Goal) * 100
   );
+  const [openBid, setOpenBid] = useState(false);
+
+  const handleClickOpenBid = () => {
+      setOpenBid(true);
+  };
+
+  const handleCloseBid = () => {
+      setOpenBid(false);
+  };
+  
   return (
     <Container>
+      <InfoDialog
+          title={"Place Bid"}
+          open={openBid}
+          handleClose={handleCloseBid}
+      >
+          <div>
+              <DialogContentText>
+                  <Stack style={{maxWidth: '15rem'}}>
+                    <div style={{display: 'flex', marginBottom: '1rem'}}>$ <input type='number' style={{marginLeft: '0.2rem'}}></input></div>
+                    <Button variant='contained'>Place Bid</Button>
+                  </Stack>
+              </DialogContentText>
+          </div>
+      </InfoDialog>
       <Stack gap={1} style={{ textAlign: "center", marginBottom: 20 }}>
         <h2 style={{ marginBottom: 0, marginTop: 0 }}>{auctionInfo.Name}</h2>
         <div>EVENT | {auctionInfo.Title.toUpperCase()}</div>
@@ -145,7 +172,7 @@ export const AuctionPage = ({}) => {
       </Box>
 
       <Stack gap={2}>
-        <AuctionItemCard />
+        <AuctionItemCard handleOpenBid={handleClickOpenBid} />
       </Stack>
     </Container>
   );
