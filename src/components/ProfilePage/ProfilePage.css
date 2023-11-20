@@ -4,3 +4,38 @@
     justify-content: center;
     align-items: center;
 }
+
+.cardflex {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    margin-bottom: 2rem;
+}
+
+.profilecard {
+    background: linear-gradient(#abebbc, white);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 8rem;
+    height: 4rem;
+    padding: .4rem;
+}
+
+.cardheader {
+    margin: 0;
+}
+
+.cardtext {
+    margin: 0;
+    font-weight: 500;
+}
+
+.accordionwrapper {
+    margin-bottom: 2rem;
+}
+
+.accordion {
+    background: linear-gradient(#abebbc, #abebbc);
+}
