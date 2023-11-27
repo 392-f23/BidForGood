@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Container } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useLocation } from "react-router-dom";
@@ -8,10 +8,27 @@ import { AuctionItemCard } from "../AuctionItemCard/AuctionItemCard";
 import InfoDialog from '../Dialog/Dialog';
 import DialogContentText from '@mui/material/DialogContentText';
 import { auctionItemData } from "../../data/auctionItems";
+import { useDbData } from "../../utilities/firebase";
 
 const AuctionPage = () => {
+  const [items_list, result1] = useDbData("/listings");
+
   const auctionInfo = useLocation().state;
   const [openBid, setOpenBid] = useState(false);
+  const [auctionItems, setAuctionItems] = useState([]);
+
+  useEffect(() => {
+    if (items_list) {
+      setAuctionItems(Object.values(items_list).filter(x => x.AuctionId === auctionInfo.id));
+    }
+  }, [items_list]);
+
+  
+  const auctionTitle = auctionInfo.AuctionName;
+  const auctionLogo = auctionInfo.Logo;
+  const orgName = auctionInfo.OrganizationName;
+  const auctionStart = auctionInfo.StartDate;
+  const auctionEnd = auctionInfo.EndDate;
 
   const handleClickOpenBid = () => {
       setOpenBid(true);
@@ -36,17 +53,17 @@ const AuctionPage = () => {
           </div>
       </InfoDialog>
       <Stack gap={1} style={{ textAlign: "center", marginBottom: 20 }}>
-        <h2 style={{ marginBottom: 0, marginTop: 0 }}>{auctionInfo.Name}</h2>
-        <div>EVENT | {auctionInfo.Title.toUpperCase()}</div>
+        <h2 style={{ marginBottom: 0, marginTop: 0 }}>{orgName}</h2>
+        <div>EVENT | {auctionTitle.toUpperCase()}</div>
         <div>
-          Runs {auctionInfo.StartDate} through {auctionInfo.EndDate}
+          Runs {auctionStart} through {auctionEnd}
         </div>
       </Stack>
 
       <AuctionInfoBox auctionInfo={auctionInfo} />
       
-      <Stack gap={.5} sx={{minWidth: 0}}>
-       {auctionItemData[auctionInfo.EventID].map((x, index)=> <AuctionItemCard key={index} handleOpenBid={handleClickOpenBid} auctionItemInfo={x} />)}
+      <Stack gap={.5} mb={"5rem"} sx={{minWidth: 0}}>
+       {auctionItems.map((x, index)=> <AuctionItemCard key={index} handleOpenBid={handleClickOpenBid} auctionItemInfo={x} />)}
       </Stack>
 
       <Banner currentPage={"explore_feed"} />

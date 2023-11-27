@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Container } from "@mui/material";
 import Header from "./components/Header/Header"
 import ExplorePage from './components/ExplorePage/ExplorePage';
@@ -7,6 +7,7 @@ import AuctionPage from './components/AuctionPage/AuctionPage';
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import YourBids from './components/YourBids/YourBids';
 import HomePage from './components/HomePage/HomePage';
+import { useDbData } from './utilities/firebase.js';
 
 const App = () => {
 
@@ -61,6 +62,10 @@ const App = () => {
     }
   ];
 
+  const [auctions_list, result1] = useDbData("/auctions");
+  const [auction_items_list, result2] = useDbData("/listings");
+  // const [orgs_list, result3] = useDbData("/organizations");
+
   return (
     <div>
       <Header />
@@ -68,7 +73,7 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/explore_feed" element={<ExplorePage aucs_list={aucs_list}/>} />
+            <Route path="/explore_feed" element={<ExplorePage aucs_list={auctions_list} items_list={auction_items_list} />} />
             <Route path="/your_bids" element={<YourBids />} />
             <Route path="/auction_page" element={<AuctionPage />} />
             <Route path="/profile" element={<ProfilePage />} />
