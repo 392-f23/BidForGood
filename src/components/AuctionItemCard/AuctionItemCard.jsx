@@ -13,10 +13,10 @@ export const AuctionItemCard = ({
   const itemImage = auctionItemInfo.Image;
 
   const placeBid = () => {
-    console.log(auctionItemInfo.id);
     setCurrentItemID(auctionItemInfo.id);
     handleOpenBid();
   };
+
   return (
     <Card className="auction-item-card" style={{ padding: 20 }}>
       <Grid container spacing={2}>

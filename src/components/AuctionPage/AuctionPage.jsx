@@ -15,8 +15,8 @@ const AuctionPage = () => {
   const [openBid, setOpenBid] = useState(false);
   const [auctionItems, setAuctionItems] = useState([]);
   const [currentItemID, setCurrentItemID] = useState("");
-  const [items_list, result1] = useDbData(`/listings`);
-  const [currentItem, result3] = useDbData(`/listings/${currentItemID}`);
+  const [items_list, error1] = useDbData(`/listings`);
+  const [currentItem, error2] = useDbData(`/listings/${currentItemID}`);
   const [updateItem, result2] = useDbUpdate(`/listings/${currentItemID}`);
   const [newBidValue, setNewBidValue] = useState(null);
 
