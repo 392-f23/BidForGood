@@ -26,7 +26,9 @@ const HomePage = () => {
         const userDataObject = {
           displayName: user.displayName,
           email: user.email,
-          photoURL: user.photoURL
+          photoURL: user.photoURL,
+          totalRaised: "$0.00",
+          auctionNumber: "0"
         };
     
         updateUsers({ [user.uid]: userDataObject });
