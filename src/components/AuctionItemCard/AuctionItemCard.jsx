@@ -2,11 +2,20 @@ import { Button, Card, Grid, Stack } from "@mui/material";
 import React from "react";
 import "./AuctionItemCard.css";
 
-export const AuctionItemCard = ({ handleOpenBid, auctionItemInfo }) => {
+export const AuctionItemCard = ({
+  handleOpenBid,
+  auctionItemInfo,
+  setCurrentItemID,
+}) => {
   const title = auctionItemInfo.Name;
   const numberOfBids = auctionItemInfo.NumberBids;
   const currentBid = auctionItemInfo.CurrentBid;
   const itemImage = auctionItemInfo.Image;
+
+  const placeBid = () => {
+    setCurrentItemID(auctionItemInfo.id);
+    handleOpenBid();
+  };
 
   return (
     <Card className="auction-item-card" style={{ padding: 20 }}>
@@ -28,7 +37,7 @@ export const AuctionItemCard = ({ handleOpenBid, auctionItemInfo }) => {
             <Button
               className="mui-btn"
               variant="contained"
-              onClick={() => handleOpenBid(auctionItemInfo)}
+              onClick={() => placeBid()}
             >
               Place bid
             </Button>

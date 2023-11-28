@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Container } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useLocation } from "react-router-dom";
@@ -8,30 +8,45 @@ import { AuctionItemCard } from "../AuctionItemCard/AuctionItemCard";
 import InfoDialog from "../Dialog/Dialog";
 import DialogContentText from "@mui/material/DialogContentText";
 import { auctionItemData } from "../../data/auctionItems";
-import { useNavigate } from "react-router-dom";
+import { useDbData, useDbUpdate } from "../../utilities/firebase";
 
 const AuctionPage = () => {
-  const navigate = useNavigate();
   const auctionInfo = useLocation().state;
   const [openBid, setOpenBid] = useState(false);
-  const [bidValue, setBidValue] = useState(0);
-  const [currentAuctionData, setCurrentAuctionData] = useState(null);
+  const [auctionItems, setAuctionItems] = useState([]);
+  const [currentItemID, setCurrentItemID] = useState("");
+  const [items_list, error1] = useDbData(`/listings`);
+  const [currentItem, error2] = useDbData(`/listings/${currentItemID}`);
+  const [updateItem, result2] = useDbUpdate(`/listings/${currentItemID}`);
+  const [newBidValue, setNewBidValue] = useState(null);
 
-  const handleClickOpenBid = (auctionItemInfo) => {
-    setCurrentAuctionData(auctionItemInfo);
+  useEffect(() => {
+    if (items_list) {
+      setAuctionItems(
+        Object.values(items_list).filter((x) => x.AuctionId === auctionInfo.id)
+      );
+    }
+  }, [items_list]);
+
+  const auctionTitle = auctionInfo.AuctionName;
+  const auctionLogo = auctionInfo.Logo;
+  const orgName = auctionInfo.OrganizationName;
+  const auctionStart = auctionInfo.StartDate;
+  const auctionEnd = auctionInfo.EndDate;
+
+  const handleClickOpenBid = () => {
     setOpenBid(true);
   };
-
-  console.log("hey", currentAuctionData);
 
   const handleCloseBid = () => {
     setOpenBid(false);
   };
 
   const placeBid = () => {
-    currentAuctionData.NumberBids = currentAuctionData.NumberBids + 1;
-    currentAuctionData.CurrentBid = Number(bidValue);
-
+    let oldCurrentItem = currentItem;
+    oldCurrentItem.CurrentBid = Number(newBidValue);
+    oldCurrentItem.NumberBids = oldCurrentItem.NumberBids + 1;
+    updateItem(oldCurrentItem);
     handleCloseBid();
   };
 
@@ -47,7 +62,7 @@ const AuctionPage = () => {
             <div style={{ display: "flex", marginBottom: "1rem" }}>
               ${" "}
               <input
-                onChange={(e) => setBidValue(e.target.value)}
+                onChange={(e) => setNewBidValue(e.target.value)}
                 type="number"
                 style={{ marginLeft: "0.2rem" }}
               ></input>
@@ -63,21 +78,22 @@ const AuctionPage = () => {
         </div>
       </InfoDialog>
       <Stack gap={1} style={{ textAlign: "center", marginBottom: 20 }}>
-        <h2 style={{ marginBottom: 0, marginTop: 0 }}>{auctionInfo.Name}</h2>
-        <div>EVENT | {auctionInfo.Title.toUpperCase()}</div>
+        <h2 style={{ marginBottom: 0, marginTop: 0 }}>{orgName}</h2>
+        <div>EVENT | {auctionTitle.toUpperCase()}</div>
         <div>
-          Runs {auctionInfo.StartDate} through {auctionInfo.EndDate}
+          Runs {auctionStart} through {auctionEnd}
         </div>
       </Stack>
 
       <AuctionInfoBox auctionInfo={auctionInfo} />
 
-      <Stack gap={0.5} sx={{ minWidth: 0 }}>
-        {auctionItemData[auctionInfo.EventID].map((x, index) => (
+      <Stack gap={0.5} mb={"5rem"} sx={{ minWidth: 0 }}>
+        {auctionItems.map((x, index) => (
           <AuctionItemCard
             key={index}
             handleOpenBid={handleClickOpenBid}
             auctionItemInfo={x}
+            setCurrentItemID={setCurrentItemID}
           />
         ))}
       </Stack>

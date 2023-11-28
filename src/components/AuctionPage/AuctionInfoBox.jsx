@@ -7,8 +7,13 @@ import Brightness1Icon from "@mui/icons-material/Brightness1";
 import { LinearProgressWithLabel } from '../ProgressBar/ProgressBar';
 
 export const AuctionInfoBox = ({ auctionInfo }) => {
+    const auctionProgress = auctionInfo.TotalRaised;
+    const auctionGoal = auctionInfo.Goal;
+    const activeAuctions = auctionInfo.ActiveAuctions;
+    const closedAuctions = auctionInfo.ClosedAuctions;
+
     const [progress, setProgress] = React.useState(
-        (auctionInfo.Progress / auctionInfo.Goal) * 100
+        (auctionProgress / auctionGoal) * 100
     );
 
     return (
@@ -36,11 +41,11 @@ export const AuctionInfoBox = ({ auctionInfo }) => {
                     }}
                 >
                     <div>
-                        ${auctionInfo.Progress} of {auctionInfo.Goal} raised
+                        ${auctionProgress} of {auctionGoal} raised
                     </div>
                     <div>
-                        Auctions: {auctionInfo.ActiveAuctions} Active |{" "}
-                        {auctionInfo.ClosedAuctions} Closed{" "}
+                        Auctions: {activeAuctions} Active |{" "}
+                        {closedAuctions} Closed{" "}
                     </div>
                 </Box>
             </Box>

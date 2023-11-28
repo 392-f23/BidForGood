@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Container } from "@mui/material";
 import Header from "./components/Header/Header";
 import ExplorePage from "./components/ExplorePage/ExplorePage";
@@ -7,103 +7,7 @@ import AuctionPage from "./components/AuctionPage/AuctionPage";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import YourBids from "./components/YourBids/YourBids";
 import HomePage from "./components/HomePage/HomePage";
-
-const data = {
-  organizations: {
-    "Evanston Animal Shelter": {
-      Website: "http://evanstonanimalshelter.net/",
-      Logo: "",
-    },
-    "Fabretto Children's Foundation": {
-      Website: "https://fabretto.org/",
-      Logo: "",
-    },
-  },
-  auctions: {
-    12345: {
-      Organization: "Evanston Animal Shelter",
-      AuctionName: "Fall Auction Drive",
-      Description: "EAS's annual fall event benefiting golden retrievers",
-      Goal: 20000,
-      TotalRaised: 10000,
-      ActiveAuctions: 1,
-      ClosedAuctions: 1,
-      StartDate: "11/20/23",
-      EndDate: "12/01/23",
-      PhoneNumber: "630-111-1234",
-      Items: [
-        {
-          Name: "Cozy Pet Bed",
-          CurrentBid: 30,
-          NumberBids: 8,
-          Image:
-            "https://paradissvp.com/cdn/shop/products/f5e01c19eae46f92df201e1a34d3fdb0_550x.jpg?v=1615695220",
-          Status: "Active",
-        },
-        {
-          Name: "Paw Print Artwork",
-          CurrentBid: 20,
-          NumberBids: 5,
-          Image:
-            "https://www.flutterbyeprints.com/cdn/shop/products/Paw_print_in_frame_white_brick_wall_0f663d48-6cbd-4f26-8cb0-939b6784dbf3.jpg?v=1609870897",
-          Status: "Active",
-        },
-        {
-          Name: "Interactive Cat Toy Set",
-          CurrentBid: 15,
-          NumberBids: 10,
-          Image: "https://m.media-amazon.com/images/I/81RZWGYhDfL.jpg",
-          Status: "Active",
-        },
-        {
-          Name: "Dog Grooming Voucher",
-          CurrentBid: 40,
-          NumberBids: 12,
-          Image:
-            "https://spiritdogtraining.com/wp-content/uploads/2021/03/how-long-does-grooming-take.jpg",
-          Status: "Active",
-        },
-      ],
-    },
-  },
-  listings: {
-    1: {
-      Name: "Cozy Pet Bed",
-      AuctionId: 123,
-      CurrentBid: 30,
-      NumberBids: 8,
-      Image:
-        "https://paradissvp.com/cdn/shop/products/f5e01c19eae46f92df201e1a34d3fdb0_550x.jpg?v=1615695220",
-      Status: "Active",
-    },
-    2: {
-      Name: "Paw Print Artwork",
-      AuctionId: 123,
-      CurrentBid: 20,
-      NumberBids: 5,
-      Image:
-        "https://www.flutterbyeprints.com/cdn/shop/products/Paw_print_in_frame_white_brick_wall_0f663d48-6cbd-4f26-8cb0-939b6784dbf3.jpg?v=1609870897",
-      Status: "Active",
-    },
-    3: {
-      Name: "Interactive Cat Toy Set",
-      AuctionId: 123,
-      CurrentBid: 15,
-      NumberBids: 10,
-      Image: "https://m.media-amazon.com/images/I/81RZWGYhDfL.jpg",
-      Status: "Active",
-    },
-    4: {
-      Name: "Dog Grooming Voucher",
-      AuctionId: 123,
-      CurrentBid: 40,
-      NumberBids: 12,
-      Image:
-        "https://spiritdogtraining.com/wp-content/uploads/2021/03/how-long-does-grooming-take.jpg",
-      Status: "Active",
-    },
-  },
-};
+import { useDbData } from "./utilities/firebase.js";
 
 const App = () => {
   const aucs_list = [
@@ -157,6 +61,10 @@ const App = () => {
     },
   ];
 
+  const [auctions_list, error1] = useDbData("/auctions");
+  const [auction_items_list, error2] = useDbData("/listings");
+  // const [orgs_list, result3] = useDbData("/organizations");
+
   return (
     <div>
       <Header />
@@ -166,7 +74,12 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route
               path="/explore_feed"
-              element={<ExplorePage aucs_list={aucs_list} />}
+              element={
+                <ExplorePage
+                  aucs_list={auctions_list}
+                  items_list={auction_items_list}
+                />
+              }
             />
             <Route path="/your_bids" element={<YourBids />} />
             <Route path="/auction_page" element={<AuctionPage />} />

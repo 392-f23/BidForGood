@@ -9,10 +9,14 @@ import DialogContentText from '@mui/material/DialogContentText';
 import './ExplorePage.css'
 import { SearchBar } from '../SearchBar/SearchBar';
 
-const ExplorePage = ({ aucs_list }) => {
+const ExplorePage = ({ aucs_list, items_list }) => {
     const [filteredAuctions, setFilteredAuctions] = useState(aucs_list);
     const [description, SetDescription] = useState("");
     const [openDescription, setOpenDescription] = useState(false);
+
+    const getAuctionImages = (item) => {
+        return Object.values(items_list).filter(x => x.AuctionId === item.id).map(y => y.Image);
+    }
 
     const handleClickOpenDescription = (list_item) => {
         const auction_desciption = list_item.Description;
@@ -47,6 +51,7 @@ const ExplorePage = ({ aucs_list }) => {
                                 <AuctionCard
                                     key={index}
                                     auctionInfo={item}
+                                    images = {() => getAuctionImages(item)}
                                     handleOpenDescription={() => handleClickOpenDescription(item)} />
                             ))}
                 </Stack>
