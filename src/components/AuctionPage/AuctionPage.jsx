@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Container} from "@mui/material";
+import { Button, Container } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useLocation } from "react-router-dom";
 import Banner from "../Banner/Banner";
@@ -22,7 +22,6 @@ const AuctionPage = () => {
   const [updateAuction, result3] = useDbUpdate(`/auctions/${auctionInfo.id}`);
   const [newBidValue, setNewBidValue] = useState(null);
   const [error, setError] = useState(false);
-  console.log(auctionInfo);
 
   useEffect(() => {
     if (items_list) {
@@ -39,7 +38,7 @@ const AuctionPage = () => {
     } else {
       setError(true);
     }
-  }
+  };
 
   const auctionTitle = auctionInfo.AuctionName;
   const auctionLogo = auctionInfo.Logo;
@@ -60,7 +59,9 @@ const AuctionPage = () => {
       setError(false);
       let oldCurrentItem = currentItem;
       let oldCurrentAuction = currentAuction;
-      oldCurrentAuction.TotalRaised = oldCurrentAuction.TotalRaised + (newBidValue - oldCurrentItem.CurrentBid);
+      oldCurrentAuction.TotalRaised =
+        oldCurrentAuction.TotalRaised +
+        (newBidValue - oldCurrentItem.CurrentBid);
       oldCurrentItem.CurrentBid = Number(newBidValue);
       oldCurrentItem.NumberBids = oldCurrentItem.NumberBids + 1;
       updateItem(oldCurrentItem);
@@ -100,7 +101,11 @@ const AuctionPage = () => {
   return (
     <Container style={{ margin: 0, padding: 0 }}>
       <InfoDialog
-        title={"Place Bid - Current Bid ($"+(currentItem ? currentItem.CurrentBid : 0)+")"}
+        title={
+          "Place Bid - Current Bid ($" +
+          (currentItem ? currentItem.CurrentBid : 0) +
+          ")"
+        }
         open={openBid}
         handleClose={handleCloseBid}
       >
@@ -122,12 +127,12 @@ const AuctionPage = () => {
             >
               Place Bid
             </Button>
-            <div >
-              { error &&
-              <div style={{color: "red"}}>
-                ERROR: Bid amount must exceed current bid.
-              </div>
-              }
+            <div>
+              {error && (
+                <div style={{ color: "red" }}>
+                  ERROR: Bid amount must exceed current bid.
+                </div>
+              )}
             </div>
           </Stack>
         </div>
@@ -139,8 +144,11 @@ const AuctionPage = () => {
           Runs {auctionStart} through {auctionEnd}
         </div>
       </Stack>
-      <AuctionInfoBox auctionInfo={auctionInfo} timeLeft={formatTime(timeRemaining)} />
-      <Stack gap={0.5} mb={"5rem"} sx={{ minWidth: 0}}>
+      <AuctionInfoBox
+        auctionInfo={auctionInfo}
+        timeLeft={formatTime(timeRemaining)}
+      />
+      <Stack gap={0.5} mb={"5rem"} sx={{ minWidth: 0 }}>
         {auctionItems.map((x, index) => (
           <AuctionItemCard
             key={index}
