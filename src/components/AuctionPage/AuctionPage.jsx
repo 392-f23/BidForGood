@@ -18,8 +18,11 @@ const AuctionPage = () => {
   const [items_list, error1] = useDbData(`/listings`);
   const [currentItem, error2] = useDbData(`/listings/${currentItemID}`);
   const [updateItem, result2] = useDbUpdate(`/listings/${currentItemID}`);
+  const [currentAuction, error3] = useDbData(`/auctions/${auctionInfo.id}`);
+  const [updateAuction, result3] = useDbUpdate(`/auctions/${auctionInfo.id}`);
   const [newBidValue, setNewBidValue] = useState(null);
   const [error, setError] = useState(false);
+  console.log(auctionInfo);
 
   useEffect(() => {
     if (items_list) {
@@ -56,9 +59,12 @@ const AuctionPage = () => {
     if (Number(newBidValue) > currentItem.CurrentBid) {
       setError(false);
       let oldCurrentItem = currentItem;
+      let oldCurrentAuction = currentAuction;
+      oldCurrentAuction.TotalRaised = oldCurrentAuction.TotalRaised + (newBidValue - oldCurrentItem.CurrentBid);
       oldCurrentItem.CurrentBid = Number(newBidValue);
       oldCurrentItem.NumberBids = oldCurrentItem.NumberBids + 1;
       updateItem(oldCurrentItem);
+      updateAuction(oldCurrentAuction);
       setNewBidValue(newBidValue);
       handleCloseBid();
     } else {
