@@ -18,7 +18,7 @@ const HomePage = () => {
 
   const checkSignInStatus = () => {
     if (user && user.uid && typeof userData !== "undefined") {
-      const uids = (Object.keys(userData) ? [""] : Object.keys(userData));
+      const uids = (userData ? Object.keys(userData) : [""]);
       if (uids.includes(user.uid)) {
         console.log("we already logged in before");
         navigate("/explore_feed");
@@ -30,8 +30,8 @@ const HomePage = () => {
           totalRaised: "$0.00",
           auctionNumber: "0"
         };
-    
         updateUsers({ [user.uid]: userDataObject });
+        navigate('/explore_feed');
       }
   }
   };
@@ -47,9 +47,6 @@ const HomePage = () => {
 
   useEffect(() => {
     checkSignInStatus(); // Check the sign-in status when user and userData are available
-    if (user && user.uid && typeof userData !== "undefined") {
-      navigate('/explore_feed');
-    }
   }, [user, userData]);
 
   const ColorButton = styled(Button)(({ theme }) => ({
