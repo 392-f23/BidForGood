@@ -13,6 +13,7 @@ const ExplorePage = ({ aucs_list, items_list }) => {
     const [filteredAuctions, setFilteredAuctions] = useState(aucs_list);
     const [description, SetDescription] = useState("");
     const [openDescription, setOpenDescription] = useState(false);
+    //console.log(filteredAuctions);
 
     const getAuctionImages = (item) => {
         return Object.values(items_list).filter(x => x.AuctionId === item.id).map(y => y.Image);

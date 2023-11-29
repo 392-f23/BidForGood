@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import './ProfilePage.css'
 import Banner from '../Banner/Banner';
 import { 
@@ -13,9 +14,14 @@ import {
   Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { useNavigate } from 'react-router-dom';
+import { useDbData, useDbUpdate } from "../../utilities/firebase";
+import { FirebaseSignOut } from "../../utilities/firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const ProfilePage = () => {
   const [expanded, setExpanded] = React.useState(false);
+  const auth = getAuth();
+  const [uid, setUid] = useState("");
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -24,21 +30,41 @@ const ProfilePage = () => {
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    navigate('/');
+    FirebaseSignOut();
+    navigate("/");
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUid(user.uid);
+      } else {
+        console.log("auth errors out.");
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+  const [userData, setUserData] = useDbData("/users/" + uid);
 
   return (
     <Container maxWidth="sm">
       <Stack className='profilestack'>
-        <Avatar style={{height: '3rem', width: '3rem'}}/>
-        <h2>John Doe</h2>
+        <Avatar
+            className="profile-pic"
+            sx={{
+              width: 40,
+              height: 40,
+            }}
+            src={userData ? userData.photoURL : ""}
+          ></Avatar>
+        <h2>{userData ? userData.displayName : ""}</h2>
         <div className='cardflex'>
           <Card className='profilecard'>
-            <h3 className='cardheader'>$143.59</h3>
+            <h3 className='cardheader'>{userData ? userData.totalRaised : ""}</h3>
             <p className='cardtext'>Total Raised</p>
           </Card>
           <Card className='profilecard'>
-            <h3 className='cardheader'>12</h3>
+            <h3 className='cardheader'>{userData ? userData.auctionNumber : ""}</h3>
             <p className='cardtext'>Auctions</p>
           </Card>
         </div>
