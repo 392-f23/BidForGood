@@ -6,7 +6,7 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import Brightness1Icon from "@mui/icons-material/Brightness1";
 import { LinearProgressWithLabel } from '../ProgressBar/ProgressBar';
 
-export const AuctionInfoBox = ({ auctionInfo }) => {
+export const AuctionInfoBox = ({ auctionInfo, timeLeft }) => {
     const auctionProgress = auctionInfo.TotalRaised;
     const auctionGoal = auctionInfo.Goal;
     const activeAuctions = auctionInfo.ActiveAuctions;
@@ -47,6 +47,7 @@ export const AuctionInfoBox = ({ auctionInfo }) => {
                         Auctions: {activeAuctions} Active |{" "}
                         {closedAuctions} Closed{" "}
                     </div>
+                    <div style={{textAlign: 'center', color: 'white', margin: '.3rem 0 0 0', fontWeight: '600'}}>{timeLeft} Remaining</div>
                 </Box>
             </Box>
             <Box

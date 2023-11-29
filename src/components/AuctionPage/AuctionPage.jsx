@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Container } from "@mui/material";
+import { Button, Container} from "@mui/material";
 import { Stack } from "@mui/system";
 import { useLocation } from "react-router-dom";
 import Banner from "../Banner/Banner";
@@ -72,6 +72,31 @@ const AuctionPage = () => {
     }
   };
 
+  const [timeRemaining, setTimeRemaining] = useState(calculateTimeRemaining());
+
+  function calculateTimeRemaining() {
+    const now = new Date().getTime();
+    const endTime = new Date(auctionEnd).getTime();
+    return Math.max(0, endTime - now);
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeRemaining(calculateTimeRemaining());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  function formatTime(ms) {
+    const seconds = Math.floor((ms / 1000) % 60);
+    const minutes = Math.floor((ms / (1000 * 60)) % 60);
+    const hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
+    const days = Math.floor(ms / (1000 * 60 * 60 * 24));
+
+    return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }
+
   return (
     <Container style={{ margin: 0, padding: 0 }}>
       <InfoDialog
@@ -114,10 +139,8 @@ const AuctionPage = () => {
           Runs {auctionStart} through {auctionEnd}
         </div>
       </Stack>
-
-      <AuctionInfoBox auctionInfo={auctionInfo} />
-
-      <Stack gap={0.5} mb={"5rem"} sx={{ minWidth: 0 }}>
+      <AuctionInfoBox auctionInfo={auctionInfo} timeLeft={formatTime(timeRemaining)} />
+      <Stack gap={0.5} mb={"5rem"} sx={{ minWidth: 0}}>
         {auctionItems.map((x, index) => (
           <AuctionItemCard
             key={index}
