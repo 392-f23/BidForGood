@@ -10,9 +10,16 @@ import './ExplorePage.css'
 import { SearchBar } from '../SearchBar/SearchBar';
 
 const ExplorePage = ({ aucs_list, items_list }) => {
-    const [filteredAuctions, setFilteredAuctions] = useState(aucs_list);
+    const [filteredAuctions, setFilteredAuctions] = useState(aucs_list ? aucs_list : []);
     const [description, SetDescription] = useState("");
     const [openDescription, setOpenDescription] = useState(false);
+    const [auctionList, setAuctionList] = useState(aucs_list);
+
+    useEffect(() => {
+        console.log(aucs_list);
+        setAuctionList(aucs_list);
+        setFilteredAuctions(aucs_list);
+    }, [aucs_list]);
     //console.log(filteredAuctions);
 
     const getAuctionImages = (item) => {
@@ -44,9 +51,9 @@ const ExplorePage = ({ aucs_list, items_list }) => {
             </InfoDialog>
 
             <Container maxWidth="sm">
-                <SearchBar setFilteredAuctions={setFilteredAuctions} aucs_list={aucs_list}/>
+                <SearchBar setFilteredAuctions={setFilteredAuctions} aucs_list={Object.values(auctionList)}/>
                 <Stack spacing={2} className="feed-stack">
-                    {aucs_list &&
+                    {auctionList &&
                         Object.values(filteredAuctions)
                             .map((item, index) => (
                                 <AuctionCard
@@ -62,4 +69,4 @@ const ExplorePage = ({ aucs_list, items_list }) => {
     )
 }
 
-export default ExplorePage
+export default ExplorePage;

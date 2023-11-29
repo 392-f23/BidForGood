@@ -12,13 +12,17 @@ export const SearchBar = ({setFilteredAuctions, aucs_list}) => {
     id="search-bar"
     className="text"
     onInput={(e) => {
-    //console.log(aucs_list)
-    const filteredAuctions = aucs_list.filter(auction => (
-      auction.Name.toLowerCase().includes(e.target.value.toLowerCase()) || 
-      auction.Title.toLowerCase().includes(e.target.value.toLowerCase())
-      ));
-    //console.log("go search!!!"+JSON.stringify(filteredAuctions))
-    setFilteredAuctions(filteredAuctions)
+      console.log(typeof e.target.value);
+      if (e.target.value.length == 0) {
+        setFilteredAuctions(aucs_list);
+      } else {
+        const filteredAuctions = aucs_list.filter(auction => (
+          auction.AuctionName.toLowerCase().includes(e.target.value.toLowerCase()) || 
+          auction.OrganizationName.toLowerCase().includes(e.target.value.toLowerCase())
+          ));
+        //console.log("go search!!!"+JSON.stringify(filteredAuctions))
+        setFilteredAuctions(filteredAuctions)
+      }
     }}
     label="Enter a keyword"
     variant="outlined"

@@ -19,6 +19,7 @@ const AuctionPage = () => {
   const [currentItem, error2] = useDbData(`/listings/${currentItemID}`);
   const [updateItem, result2] = useDbUpdate(`/listings/${currentItemID}`);
   const [newBidValue, setNewBidValue] = useState(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     if (items_list) {
@@ -27,6 +28,15 @@ const AuctionPage = () => {
       );
     }
   }, [items_list]);
+
+  const setBidState = (state) => {
+    if (state >= currentItem.CurrentBid) {
+      setError(false);
+      setNewBidValue(state);
+    } else {
+      setError(true);
+    }
+  }
 
   const auctionTitle = auctionInfo.AuctionName;
   const auctionLogo = auctionInfo.Logo;
@@ -43,17 +53,23 @@ const AuctionPage = () => {
   };
 
   const placeBid = () => {
-    let oldCurrentItem = currentItem;
-    oldCurrentItem.CurrentBid = Number(newBidValue);
-    oldCurrentItem.NumberBids = oldCurrentItem.NumberBids + 1;
-    updateItem(oldCurrentItem);
-    handleCloseBid();
+    if (Number(newBidValue) > currentItem.CurrentBid) {
+      setError(false);
+      let oldCurrentItem = currentItem;
+      oldCurrentItem.CurrentBid = Number(newBidValue);
+      oldCurrentItem.NumberBids = oldCurrentItem.NumberBids + 1;
+      updateItem(oldCurrentItem);
+      setNewBidValue(newBidValue);
+      handleCloseBid();
+    } else {
+      setError(true);
+    }
   };
 
   return (
     <Container style={{ margin: 0, padding: 0 }}>
       <InfoDialog
-        title={"Place Bid"}
+        title={"Place Bid - Current Bid ($"+(currentItem ? currentItem.CurrentBid : 0)+")"}
         open={openBid}
         handleClose={handleCloseBid}
       >
@@ -62,7 +78,8 @@ const AuctionPage = () => {
             <div style={{ display: "flex", marginBottom: "1rem" }}>
               ${" "}
               <input
-                onChange={(e) => setNewBidValue(e.target.value)}
+                onChange={(e) => setBidState(e.target.value)}
+                defaultValue={currentItem ? currentItem.CurrentBid : 0}
                 type="number"
                 style={{ marginLeft: "0.2rem" }}
               ></input>
@@ -74,6 +91,13 @@ const AuctionPage = () => {
             >
               Place Bid
             </Button>
+            <div >
+              { error &&
+              <div style={{color: "red"}}>
+                ERROR: Bid amount must exceed current bid.
+              </div>
+              }
+            </div>
           </Stack>
         </div>
       </InfoDialog>
