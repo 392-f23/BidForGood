@@ -46,6 +46,10 @@ const HomePage = () => {
     navigate("/org_signin");
   }
 
+  const signInAsOrg = () => {
+    navigate("/org_signin");
+  }
+
   useEffect(() => {
     checkSignInStatus(); // Check the sign-in status when user and userData are available
   }, [user, userData]);
@@ -53,15 +57,19 @@ const HomePage = () => {
   const ColorButton = styled(Button)(({ theme }) => ({
     color: 'white',
     backgroundColor: 'green'
+    backgroundColor: 'green'
   }));
 
   return (
+    <Container sx={{display: 'flex'}} className="home-container" maxWidth="sm">
     <Container sx={{display: 'flex'}} className="home-container" maxWidth="sm">
         <Stack className='bidstack'>
               <h2 className='hometext'>Auctions Made Easier</h2>
               <img src='/BidForGood.png' />
               <ColorButton className="color-btn" onClick={signInWithFirebase}>Sign in as Bidder</ColorButton>
+              <ColorButton className="color-btn" onClick={signInWithFirebase}>Sign in as Bidder</ColorButton>
         </Stack>
+        <h3 className="org-signin" onClick={signInAsOrg}>Sign in as Organization</h3>
         <h3 className="org-signin" onClick={signInAsOrg}>Sign in as Organization</h3>
     </Container>
   );
