@@ -3,10 +3,10 @@
     margin-top: 1rem;
 }
 
-.home-container {
+/* .home-container {
     display: flex !important;
     flex-direction: column !important;
-}
+} */
 
 .post-button{
     display:flex;

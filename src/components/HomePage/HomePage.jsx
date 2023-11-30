@@ -13,6 +13,7 @@ const HomePage = () => {
   const [userData, error] = useDbData("/users");
   const [updateUsers, result] = useDbUpdate("/users");
 
+
   const checkSignInStatus = () => {
     if (user && user.uid && typeof userData !== "undefined") {
       const uids = userData ? Object.keys(userData) : [""];
@@ -41,22 +42,27 @@ const HomePage = () => {
     }
   };
 
+  const signInAsOrg = () => {
+    navigate("/org_signin");
+  }
+
   useEffect(() => {
     checkSignInStatus(); // Check the sign-in status when user and userData are available
   }, [user, userData]);
 
   const ColorButton = styled(Button)(({ theme }) => ({
-    color: "white",
-    backgroundColor: "green;",
+    color: 'white',
+    backgroundColor: 'green'
   }));
 
   return (
-    <Container maxWidth="sm">
-      <Stack className="bidstack">
-        <h2 className="hometext">Auctions Made Easier</h2>
-        <img src="/BidForGood.png" />
-        <ColorButton onClick={signInWithFirebase}>Sign in</ColorButton>
-      </Stack>
+    <Container sx={{display: 'flex'}} className="home-container" maxWidth="sm">
+        <Stack className='bidstack'>
+              <h2 className='hometext'>Auctions Made Easier</h2>
+              <img src='/BidForGood.png' />
+              <ColorButton className="color-btn" onClick={signInWithFirebase}>Sign in as Bidder</ColorButton>
+        </Stack>
+        <h3 className="org-signin" onClick={signInAsOrg}>Sign in as Organization</h3>
     </Container>
   );
 };
