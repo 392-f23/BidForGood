@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Container} from "@mui/material";
+import { Button, Container } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useLocation } from "react-router-dom";
 import Banner from "../Banner/Banner";
@@ -8,15 +8,17 @@ import { AuctionItemCard } from "../AuctionItemCard/AuctionItemCard";
 import InfoDialog from "../Dialog/Dialog";
 import DialogContentText from "@mui/material/DialogContentText";
 import { auctionItemData } from "../../data/auctionItems";
-import {  useDbData, useDbUpdate } from "../../utilities/firebase";
+import { useDbData, useDbUpdate } from "../../utilities/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-
+import { BidHistory } from "../BidHistory/BidHistory";
 
 const AuctionPage = () => {
   const auth = getAuth();
   const [uid, setUid] = useState("");
   const auctionInfo = useLocation().state;
   const [openBid, setOpenBid] = useState(false);
+  const [openBidHistory, setOpenBidHistory] = useState(false);
+
   const [auctionItems, setAuctionItems] = useState([]);
   const [currentItemID, setCurrentItemID] = useState("");
   const [items_list, error1] = useDbData(`/listings`);
@@ -26,10 +28,8 @@ const AuctionPage = () => {
   const [updateAuction, result3] = useDbUpdate(`/auctions/${auctionInfo.id}`);
   const [usersData, error9] = useDbData("/users");
 
-
   const [newBidValue, setNewBidValue] = useState(null);
   const [error, setError] = useState(false);
-
 
   // Update User
   // Update Listing
@@ -50,7 +50,7 @@ const AuctionPage = () => {
   // console.log(userData)
   // const [userData, result] = useDbData("/users/"+ user ?user.uid: "");
   // const [updateUserData, error10] = useDbUpdate("/users/"+user && user.uid?user.uid: "");
- 
+
   useEffect(() => {
     if (items_list) {
       setAuctionItems(
@@ -60,13 +60,13 @@ const AuctionPage = () => {
   }, [items_list]);
 
   const setBidState = (state) => {
-    if (state >= currentItem.CurrentBid) {
+    if (state >= getHighestBid(currentItem)) {
       setError(false);
       setNewBidValue(state);
     } else {
       setError(true);
     }
-  }
+  };
 
   const auctionTitle = auctionInfo.AuctionName;
   const auctionLogo = auctionInfo.Logo;
@@ -82,42 +82,66 @@ const AuctionPage = () => {
     setOpenBid(false);
   };
 
+  const handleClickOpenBidHistory = () => {
+    setOpenBidHistory(true);
+  };
+
+  const handleCloseBidHistory = () => {
+    setOpenBidHistory(false);
+  };
+
+  const getHighestBid = (listing) => {
+    const bids = listing.Bids;
+    let highestBid = 0;
+
+    if (bids) {
+      bids.forEach((bid) => {
+        highestBid = Math.max(highestBid, bid.bidAmount);
+      });
+    }
+
+    return highestBid;
+  };
+
   const placeBid = () => {
-    if (Number(newBidValue) > currentItem.CurrentBid) {
+    if (Number(newBidValue) > getHighestBid(currentItem)) {
       setError(false);
       let oldCurrentItem = currentItem;
       let oldCurrentAuction = currentAuction;
-      oldCurrentAuction.TotalRaised = oldCurrentAuction.TotalRaised + (newBidValue - oldCurrentItem.CurrentBid);
-      // oldCurrentItem.CurrentBid = Number(newBidValue);
-      oldCurrentItem.NumberBids = oldCurrentItem.NumberBids + 1;
-     
-      let currentBidders = oldCurrentItem.Bidders || []
-      currentBidders.push({"userID": uid, "bidAmount": Number(newBidValue)})
-      oldCurrentItem.Bidders = currentBidders;
+      oldCurrentAuction.TotalRaised =
+        oldCurrentAuction.TotalRaised +
+        (newBidValue - getHighestBid(currentItem));
+
+      let currentBids = oldCurrentItem.Bids || [];
+      const now = new Date();
+      currentBids.push({
+        userID: uid,
+        bidAmount: Number(newBidValue),
+        time: now,
+      });
       updateItem(oldCurrentItem);
 
       // Update user
-      let currentUser = usersData[uid]
+      let currentUser = usersData[uid];
       let currentMyBids = currentUser.myBids || [];
-      currentMyBids.push({"bidID": oldCurrentItem.id, "bidAmount": Number(newBidValue)})
+      currentMyBids.push({
+        bidID: oldCurrentItem.id,
+        bidAmount: Number(newBidValue),
+      });
       // currentUser.myBids = currentMyBids;
 
-      updateUser({"myBids":currentMyBids})
-     
+      updateUser({ myBids: currentMyBids });
+
       updateAuction(oldCurrentAuction);
       setNewBidValue(newBidValue);
 
       // let userBids = userData.bids || [];
       // userBids.push(auctionInfo.id)
       // // updateUserData({bids: userBids});
-  
+
       // console.log("working")
 
       handleCloseBid();
-
-
-
-
     } else {
       setError(true);
     }
@@ -151,7 +175,11 @@ const AuctionPage = () => {
   return (
     <Container style={{ margin: 0, padding: 0 }}>
       <InfoDialog
-        title={"Place Bid - Current Bid ($"+(currentItem ? currentItem.CurrentBid : 0)+")"}
+        title={
+          "Place Bid - Highest Bid ($" +
+          (currentItem ? getHighestBid(currentItem) : 0) +
+          ")"
+        }
         open={openBid}
         handleClose={handleCloseBid}
       >
@@ -173,15 +201,22 @@ const AuctionPage = () => {
             >
               Place Bid
             </Button>
-            <div >
-              { error &&
-              <div style={{color: "red"}}>
-                ERROR: Bid amount must exceed current bid.
-              </div>
-              }
+            <div>
+              {error && (
+                <div style={{ color: "red" }}>
+                  ERROR: Bid amount must exceed current bid.
+                </div>
+              )}
             </div>
           </Stack>
         </div>
+      </InfoDialog>
+      <InfoDialog
+        title="Bid History"
+        open={openBidHistory}
+        handleClose={handleCloseBidHistory}
+      >
+        <BidHistory currentItem={currentItem} />
       </InfoDialog>
       <Stack gap={1} style={{ textAlign: "center", marginBottom: 20 }}>
         <h2 style={{ marginBottom: 0, marginTop: 0 }}>{orgName}</h2>
@@ -190,14 +225,18 @@ const AuctionPage = () => {
           Runs {auctionStart} through {auctionEnd}
         </div>
       </Stack>
-      <AuctionInfoBox auctionInfo={auctionInfo} timeLeft={formatTime(timeRemaining)} />
-      <Stack gap={0.5} mb={"5rem"} sx={{ minWidth: 0}}>
+      <AuctionInfoBox
+        auctionInfo={auctionInfo}
+        timeLeft={formatTime(timeRemaining)}
+      />
+      <Stack gap={0.5} mb={"5rem"} sx={{ minWidth: 0 }}>
         {auctionItems.map((x, index) => (
           <AuctionItemCard
             key={index}
             handleOpenBid={handleClickOpenBid}
             auctionItemInfo={x}
             setCurrentItemID={setCurrentItemID}
+            handleClickOpenBidHistory={handleClickOpenBidHistory}
           />
         ))}
       </Stack>
