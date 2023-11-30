@@ -1,0 +1,21 @@
+.sign-up-title {
+    text-align: center;
+}
+
+.signin-btn:hover {
+    background-color: rgb(13, 98, 13) !important;
+}
+
+.signup-btn {
+    color: green;
+    margin-top: 10rem;
+    cursor: pointer;
+}
+
+.signup-btn:hover {
+    color: darkgreen;
+}
+
+.org-banner-icon:hover {
+    color: green !important;
+}

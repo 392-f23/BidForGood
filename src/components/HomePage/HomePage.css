@@ -2,9 +2,23 @@
     color: rgb(47, 132, 42);
 }
 
-.continuelink {
-    margin-top: 3rem;
-    text-decoration: none;
-    color: rgb(47, 132, 42);
+.color-btn:hover {
+    background-color: rgb(13, 98, 13) !important;
+}
+
+.home-container {
+    /* border: 3px solid orangered; */
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.org-signin {
+    color: green;
+    margin-top: 10rem;
     cursor: pointer;
+}
+
+.org-signin:hover {
+    color: darkgreen;
 }

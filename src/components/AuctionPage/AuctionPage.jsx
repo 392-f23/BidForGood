@@ -22,7 +22,7 @@ const AuctionPage = () => {
   const [updateAuction, result3] = useDbUpdate(`/auctions/${auctionInfo.id}`);
   const [newBidValue, setNewBidValue] = useState(null);
   const [error, setError] = useState(false);
-  console.log(auctionInfo);
+  // console.log(auctionInfo);
 
   useEffect(() => {
     if (items_list) {
