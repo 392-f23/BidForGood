@@ -1,6 +1,7 @@
 import { Button, Card, Grid, Stack } from "@mui/material";
 import React from "react";
 import "./AuctionItemCard.css";
+import { useAuth, useDbData, useDbUpdate } from "../../utilities/firebase";
 
 export const AuctionItemCard = ({
   handleOpenBid,
@@ -12,9 +13,15 @@ export const AuctionItemCard = ({
   const currentBid = auctionItemInfo.CurrentBid;
   const itemImage = auctionItemInfo.Image;
 
+
   const placeBid = () => {
     setCurrentItemID(auctionItemInfo.id);
     handleOpenBid();
+
+  
+    //  update users bids collection
+    // {user: {bids: []}}
+
   };
 
   return (

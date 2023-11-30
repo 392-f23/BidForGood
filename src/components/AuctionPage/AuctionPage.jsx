@@ -8,9 +8,13 @@ import { AuctionItemCard } from "../AuctionItemCard/AuctionItemCard";
 import InfoDialog from "../Dialog/Dialog";
 import DialogContentText from "@mui/material/DialogContentText";
 import { auctionItemData } from "../../data/auctionItems";
-import { useDbData, useDbUpdate } from "../../utilities/firebase";
+import {  useDbData, useDbUpdate } from "../../utilities/firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 
 const AuctionPage = () => {
+  const auth = getAuth();
+  const [uid, setUid] = useState("");
   const auctionInfo = useLocation().state;
   const [openBid, setOpenBid] = useState(false);
   const [auctionItems, setAuctionItems] = useState([]);
@@ -20,10 +24,33 @@ const AuctionPage = () => {
   const [updateItem, result2] = useDbUpdate(`/listings/${currentItemID}`);
   const [currentAuction, error3] = useDbData(`/auctions/${auctionInfo.id}`);
   const [updateAuction, result3] = useDbUpdate(`/auctions/${auctionInfo.id}`);
+  const [usersData, error9] = useDbData("/users");
+
+
   const [newBidValue, setNewBidValue] = useState(null);
   const [error, setError] = useState(false);
-  console.log(auctionInfo);
 
+
+  // Update User
+  // Update Listing
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUid(user.uid);
+      } else {
+        console.log("auth errors out.");
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const [updateUser, result4] = useDbUpdate(`/users/${uid}`);
+
+  // console.log(userData)
+  // const [userData, result] = useDbData("/users/"+ user ?user.uid: "");
+  // const [updateUserData, error10] = useDbUpdate("/users/"+user && user.uid?user.uid: "");
+ 
   useEffect(() => {
     if (items_list) {
       setAuctionItems(
@@ -61,12 +88,36 @@ const AuctionPage = () => {
       let oldCurrentItem = currentItem;
       let oldCurrentAuction = currentAuction;
       oldCurrentAuction.TotalRaised = oldCurrentAuction.TotalRaised + (newBidValue - oldCurrentItem.CurrentBid);
-      oldCurrentItem.CurrentBid = Number(newBidValue);
+      // oldCurrentItem.CurrentBid = Number(newBidValue);
       oldCurrentItem.NumberBids = oldCurrentItem.NumberBids + 1;
+     
+      let currentBidders = oldCurrentItem.Bidders || []
+      currentBidders.push({"userID": uid, "bidAmount": Number(newBidValue)})
+      oldCurrentItem.Bidders = currentBidders;
       updateItem(oldCurrentItem);
+
+      // Update user
+      let currentUser = usersData[uid]
+      let currentMyBids = currentUser.myBids || [];
+      currentMyBids.push({"bidID": oldCurrentItem.id, "bidAmount": Number(newBidValue)})
+      // currentUser.myBids = currentMyBids;
+
+      updateUser({"myBids":currentMyBids})
+     
       updateAuction(oldCurrentAuction);
       setNewBidValue(newBidValue);
+
+      // let userBids = userData.bids || [];
+      // userBids.push(auctionInfo.id)
+      // // updateUserData({bids: userBids});
+  
+      // console.log("working")
+
       handleCloseBid();
+
+
+
+
     } else {
       setError(true);
     }
