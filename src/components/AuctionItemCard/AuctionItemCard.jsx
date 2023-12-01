@@ -14,9 +14,11 @@ export const AuctionItemCard = ({
   const bids = auctionItemInfo.Bids;
   let highestBid = 0;
 
-  bids.forEach((bid) => {
-    highestBid = Math.max(highestBid, bid.bidAmount);
-  });
+  if (bids) {
+    bids.forEach((bid) => {
+      highestBid = Math.max(highestBid, bid.bidAmount);
+    });
+  }
 
   const openBidHistory = () => {
     setCurrentItemID(auctionItemInfo.id);
@@ -47,7 +49,9 @@ export const AuctionItemCard = ({
             <div style={{ fontWeight: "bold" }}>{title}</div>
             <div>Highest bid: ${highestBid}</div>
             <Button onClick={() => openBidHistory()}>
-              {bids.length} {bids.length == 1 ? "bid" : "bids"}
+              {bids
+                ? `${bids.length} ${bids.length == 1 ? "bid" : "bids"}`
+                : "No bids"}
             </Button>
             <Button
               className="mui-btn"
