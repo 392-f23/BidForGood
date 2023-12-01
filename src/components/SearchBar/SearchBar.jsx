@@ -6,7 +6,12 @@ import { auctionItemData } from "../../data/auctionItems";
 
 export const SearchBar = ({ setFilteredAuctions, aucs_list }) => {
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
       <TextField
         id="search-bar"
         className="text"
@@ -27,10 +32,11 @@ export const SearchBar = ({ setFilteredAuctions, aucs_list }) => {
             setFilteredAuctions(filteredAuctions);
           }
         }}
-        label="Enter a keyword"
+        label="Search auctions"
         variant="outlined"
-        placeholder="Search your auction"
+        placeholder="Search auctions"
         size="small"
+        style={{ width: 250 }}
       />
       <IconButton type="submit" aria-label="search">
         <SearchIcon style={{ fill: "green" }} />
