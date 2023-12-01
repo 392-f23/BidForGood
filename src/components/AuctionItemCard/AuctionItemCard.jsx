@@ -48,7 +48,14 @@ export const AuctionItemCard = ({
           <Stack gap={2}>
             <div style={{ fontWeight: "bold" }}>{title}</div>
             <div>Highest bid: ${highestBid}</div>
-            <Button onClick={() => openBidHistory()}>
+            <Button
+              style={{
+                maxWidth: "80px",
+                justifyContent: "flex-start",
+                padding: "0px",
+              }}
+              onClick={() => openBidHistory()}
+            >
               {bids
                 ? `${bids.length} ${bids.length == 1 ? "bid" : "bids"}`
                 : "No bids"}
