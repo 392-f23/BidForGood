@@ -44,7 +44,7 @@ export const OrgProfilePage = () => {
         <h2>PuppiesRUs</h2>
         <div className='cardflex'>
           <Card className='profilecard'>
-            <h3 className='cardheader'>$10,873</h3>
+            <h3 className='cardheader'>$8,215</h3>
             <p className='cardtext'>Total Raised</p>
           </Card>
           <Card className='profilecard'>
