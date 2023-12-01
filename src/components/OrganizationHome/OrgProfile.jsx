@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-import './ProfilePage.css'
+import { useState } from 'react';
+import '../ProfilePage/ProfilePage.css'
 import OrgBanner from "./OrgBanner.jsx";
 import { 
   Container, 
@@ -27,11 +27,9 @@ export const OrgProfilePage = () => {
   const handleSignOut = () => {
     navigate("/");
   };
-
-  const [userData, setUserData] = useState({});
-
+  
   return (
-    <Container maxWidth="sm">
+    <Container sx={{marginBottom: "5rem"}} maxWidth="sm">
       <Stack className='profilestack'>
         <Avatar
             className="profile-pic"

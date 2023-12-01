@@ -47,7 +47,7 @@ const ProfilePage = () => {
   const [userData, setUserData] = useDbData("/users/" + uid);
 
   return (
-    <Container maxWidth="sm">
+    <Container sx={{marginBottom: "5rem"}} maxWidth="sm">
       <Stack className='profilestack'>
         <Avatar
             className="profile-pic"

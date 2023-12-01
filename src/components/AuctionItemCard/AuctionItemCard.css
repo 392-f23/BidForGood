@@ -15,3 +15,8 @@
     object-fit: scale-down;
     object-position: center;
 }
+
+.see-bids-btn:hover {
+    color: darkgreen !important;
+    font-weight: 600 !important;
+}

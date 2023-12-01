@@ -1,12 +1,11 @@
 import { Button, Card, Grid, Stack } from "@mui/material";
 import React from "react";
-import "./AuctionItemCard.css";
-import { useAuth, useDbData, useDbUpdate } from "../../utilities/firebase";
+import "../AuctionItemCard/AuctionItemCard.css";
 
-export const AuctionItemCard = ({
-  handleOpenBid,
+export const OrgItemCard = ({
   auctionItemInfo,
   setCurrentItemID,
+  setCurrentItem,
   handleClickOpenBidHistory,
 }) => {
   const title = auctionItemInfo.Name;
@@ -22,14 +21,8 @@ export const AuctionItemCard = ({
 
   const openBidHistory = () => {
     setCurrentItemID(auctionItemInfo.id);
+    setCurrentItem(auctionItemInfo);
     handleClickOpenBidHistory();
-  };
-  const placeBid = () => {
-    setCurrentItemID(auctionItemInfo.id);
-    handleOpenBid();
-
-    //  update users bids collection
-    // {user: {bids: []}}
   };
 
   return (
@@ -54,7 +47,7 @@ export const AuctionItemCard = ({
                 maxWidth: "80px",
                 justifyContent: "flex-start",
                 padding: "0px",
-                color: "green",
+                color: "green"
               }}
               onClick={() => openBidHistory()}
             >
@@ -65,9 +58,9 @@ export const AuctionItemCard = ({
             <Button
               className="mui-btn"
               variant="contained"
-              onClick={() => placeBid()}
+              onClick={null}
             >
-              Place bid
+              Edit Item
             </Button>
           </Stack>
         </Grid>

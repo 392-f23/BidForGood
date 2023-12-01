@@ -48,10 +48,6 @@ const AuctionPage = () => {
 
   const [updateUser, result4] = useDbUpdate(`/users/${uid}`);
 
-  // console.log(userData)
-  // const [userData, result] = useDbData("/users/"+ user ?user.uid: "");
-  // const [updateUserData, error10] = useDbUpdate("/users/"+user && user.uid?user.uid: "");
-
   useEffect(() => {
     if (items_list) {
       setAuctionItems(
@@ -224,10 +220,11 @@ const AuctionPage = () => {
       </InfoDialog>
       <Stack gap={1} style={{ textAlign: "center", marginBottom: 20 }}>
         <h2 style={{ marginBottom: 0, marginTop: 0 }}>{orgName}</h2>
-        <div>EVENT | {auctionTitle.toUpperCase()}</div>
-        <div>
+        <p style={{ margin: 0 }}>EVENT | {auctionTitle.toUpperCase()}</p>
+        <p style={{ margin: 0 }}><i>{auctionInfo.Description}</i></p>
+        <p style={{ margin: 0 }}>
           Runs {auctionStart} through {auctionEnd}
-        </div>
+        </p>
       </Stack>
       <AuctionInfoBox
         auctionInfo={auctionInfo}
