@@ -24,7 +24,6 @@ export const SearchBar = ({ setFilteredAuctions, aucs_list }) => {
                   e.target.value.toLowerCase()
                 )
             );
-            //console.log("go search!!!"+JSON.stringify(filteredAuctions))
             setFilteredAuctions(filteredAuctions);
           }
         }}

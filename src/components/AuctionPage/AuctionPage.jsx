@@ -13,7 +13,6 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { BidHistory } from "../BidHistory/BidHistory";
 import { v4 as uuidv4 } from "uuid";
 
-
 const AuctionPage = () => {
   const auth = getAuth();
   const [uid, setUid] = useState("");
@@ -120,11 +119,10 @@ const AuctionPage = () => {
         userID: uid,
         bidAmount: Number(newBidValue),
         time: now,
-        id: uuidv4()
-      }
+        id: uuidv4(),
+      };
       currentBids.push(newBid);
-      updateItem({Bids: currentBids});
-
+      updateItem({ Bids: currentBids });
 
       // Update user
       let currentUser = usersData[uid];
