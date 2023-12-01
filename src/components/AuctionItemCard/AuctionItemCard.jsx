@@ -46,7 +46,7 @@ export const AuctionItemCard = ({
         </Grid>
         <Grid item xs={7}>
           <Stack gap={2}>
-            <div style={{ fontWeight: "bold" }}>{title}</div>
+            <div style={{ fontWeight: "bold", fontSize: "20px" }}>{title}</div>
             <div>Highest bid: ${highestBid}</div>
             <Button
               style={{

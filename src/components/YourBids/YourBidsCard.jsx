@@ -29,45 +29,43 @@ export const YourBidsCard = ({
 
     // update listings
     let currentBids = allListings[listingID].Bids || [];
-    let userBid = {}
+    let userBid = {};
 
+    currentBids.map((x) => {
+      if (x.id == bidID) {
+        userBid = x;
+      }
+    });
 
-    currentBids.map(x=>{
-        if (x.id == bidID){
-            userBid = x
-        }
-    })
+    // UPDATE THE AUCTION TOTAL
 
-        // UPDATE THE AUCTION TOTAL
+    let bidAmountArray = [];
+    currentBids.map((x) => {
+      bidAmountArray.push(x.bidAmount);
+    });
 
-    let bidAmountArray = []
-    currentBids.map(x=> {
-        bidAmountArray.push(x.bidAmount)
-    })
-
-    bidAmountArray.sort((a,b)=> a-b);
+    bidAmountArray.sort((a, b) => a - b);
     let currentTotal = allAuctions[auctionID].TotalRaised;
 
-
-    if (Math.max(...bidAmountArray) == userBid.bidAmount){
-        if(bidAmountArray.length > 1){
-            let diff = Math.max(...bidAmountArray) - bidAmountArray[bidAmountArray.length-2];
-            currentTotal -= diff
-        }else{
-            currentTotal-= Math.max(...bidAmountArray)
-        }
+    if (Math.max(...bidAmountArray) == userBid.bidAmount) {
+      if (bidAmountArray.length > 1) {
+        let diff =
+          Math.max(...bidAmountArray) -
+          bidAmountArray[bidAmountArray.length - 2];
+        currentTotal -= diff;
+      } else {
+        currentTotal -= Math.max(...bidAmountArray);
+      }
     }
-    updateAuction({TotalRaised: currentTotal});
+    updateAuction({ TotalRaised: currentTotal });
 
-
-    currentBids = currentBids.filter(x=> x.id !== bidID);
+    currentBids = currentBids.filter((x) => x.id !== bidID);
     updateListing({ Bids: currentBids });
 
     // Update user
-    let userBids = allUsers[userID].myBids || []
-    userBids = userBids.filter(x=> x.bidID !== bidID);
+    let userBids = allUsers[userID].myBids || [];
+    userBids = userBids.filter((x) => x.bidID !== bidID);
     updateUser({ myBids: userBids });
-
   };
 
   return (
@@ -84,7 +82,7 @@ export const YourBidsCard = ({
         </Grid>
         <Grid item xs={7}>
           <Stack gap={2}>
-            <div style={{ fontWeight: "bold" }}>{title}</div>
+            <div style={{ fontWeight: "bold", fontSize: "20px" }}>{title}</div>
             <div>Your bid: ${bidAmount} </div>
             <div># of bids: {numOfBids} </div>
             <Button className="mui-btn" variant="contained" onClick={removeBid}>
