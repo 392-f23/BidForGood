@@ -30,6 +30,12 @@ function formatCustomDate(inputDateString) {
 export const BidHistory = ({ currentItem }) => {
   const bids = currentItem.Bids;
 
+  let reversedBids = null;
+
+  if (bids) {
+    reversedBids = [...bids].reverse();
+  }
+
   return (
     <TableContainer>
       <Table sx={{ maxWidth: "280px" }} aria-label="simple table">
@@ -40,8 +46,8 @@ export const BidHistory = ({ currentItem }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {bids ? (
-            bids.map((bid) => (
+          {reversedBids ? (
+            reversedBids.map((bid) => (
               <TableRow key={bid.id}>
                 <TableCell>${bid.bidAmount}</TableCell>
                 <TableCell>{formatCustomDate(bid.time)}</TableCell>
