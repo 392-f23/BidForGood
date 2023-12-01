@@ -21,8 +21,7 @@ const YourBids = () => {
         ...allListings[x.listingID],
         bidAmount: x.bidAmount,
         auctionID: allListings[x.listingID].auctionID,
-        bidID: x.bidID
-
+        bidID: x.bidID,
       });
     });
 
@@ -41,9 +40,10 @@ const YourBids = () => {
       <Stack className="bidstack">
         <h2>Your Bids</h2>
         <div></div>
-        {myBids.length > 0 ? 
+        {myBids.length > 0 ? (
           myBids.map((x) => (
             <YourBidsCard
+              key={x.bidID}
               bidID={x.bidID}
               listingID={x.id}
               auctionID={x.AuctionId}
@@ -53,9 +53,9 @@ const YourBids = () => {
               bidAmount={x.bidAmount}
               Image={x.Image}
             />
-          )
+          ))
         ) : (
-          <div style={{textAlign: "center"}}>
+          <div style={{ textAlign: "center" }}>
             You don't have any bids currently
             <img
               height="200"

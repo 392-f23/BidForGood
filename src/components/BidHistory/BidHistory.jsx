@@ -27,7 +27,7 @@ export const BidHistory = ({ currentItem }) => {
         <TableBody>
           {bids ? (
             bids.map((bid) => (
-              <TableRow key={bid.userID}>
+              <TableRow key={bid.id}>
                 <TableCell>${bid.bidAmount}</TableCell>
                 <TableCell>{bid.time}</TableCell>
               </TableRow>
