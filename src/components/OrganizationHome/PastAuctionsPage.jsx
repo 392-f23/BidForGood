@@ -12,7 +12,7 @@ export const PastAuctionsPage = () => {
     ActiveAuctions: 0,
     AuctionName: "Purple Pride Auction",
     ClosedAuctions: 12,
-    Description: "Making Evanston an even better place to live, work, and thrive.",
+    Description: "Help NU Athletics contribute to the community!",
     EndDate: "11/01/23",
     Goal: 15000,
     OrganizationName: "Evanston Community Foundation",
@@ -20,7 +20,7 @@ export const PastAuctionsPage = () => {
     StartDate: "10/20/23",
     TotalRaised: 15000
   };
-  const images = ['https://images.footballfanatics.com/boston-celtics/jayson-tatum-boston-celtics-autographed-wilson-nba-authentic-series-indoor/outdoor-basketball_pi4593000_altimages_ff_4593961-83f4d6df24d207b4ac37alt1_full.jpg?_hv=2&w=900'];
+  const images = ['https://images.footballfanatics.com/boston-celtics/jayson-tatum-boston-celtics-autographed-wilson-nba-authentic-series-indoor/outdoor-basketball_pi4593000_altimages_ff_4593961-83f4d6df24d207b4ac37alt1_full.jpg?_hv=2&w=900', 'https://fanatics.frgimages.com/northwestern-wildcats/mens-under-armour-number-51-black-northwestern-wildcats-logo-replica-football-jersey_pi3832000_altimages_ff_3832701-20179b7be8e6af6449e9alt1_full.jpg?_hv=2&w=900', 'https://i5.walmartimages.com/seo/Men-s-Cutter-Buck-Gray-White-Northwestern-Wildcats-Big-Tall-Virtue-Eco-Pique-Micro-Stripe-Recycled-Quarter-Zip_e9d41122-8956-4e9e-8a36-16233e38d266.267983756af56b72fa5eaedf8a7dd0a6.jpeg?odnHeight=2000&odnWidth=2000&odnBg=FFFFFF'];
   const handleClickOpenDescription = (description) => {
     SetDescription(description);
     setOpenDescription(true);
