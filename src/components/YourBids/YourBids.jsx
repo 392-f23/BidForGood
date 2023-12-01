@@ -18,13 +18,14 @@ const YourBids = () => {
     let res = [];
     arrayOfIDs.map((x) => {
       res.push({
-        ...allListings[x.bidID],
+        ...allListings[x.listingID],
         bidAmount: x.bidAmount,
-        auctionID: allListings[x.bidID].auctionID,
+        auctionID: allListings[x.listingID].auctionID,
+        bidID: x.bidID
+
       });
     });
 
-    console.log(allListings);
     setMyBids(res);
   };
 
@@ -43,7 +44,8 @@ const YourBids = () => {
         {myBids.length > 0 ? 
           myBids.map((x) => (
             <YourBidsCard
-              bidID={x.id}
+              bidID={x.bidID}
+              listingID={x.id}
               auctionID={x.AuctionId}
               userID={user.uid}
               title={x.Name}

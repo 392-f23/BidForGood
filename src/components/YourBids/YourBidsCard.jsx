@@ -4,55 +4,71 @@ import { useAuth, useDbData, useDbUpdate } from "../../utilities/firebase";
 import { useEffect } from "react";
 import { useState } from "react";
 
+export const YourBidsCard = ({
+  title,
+  bidAmount,
+  numOfBids,
+  Image,
+  bidID,
+  listingID,
+  userID,
+  auctionID,
+}) => {
+  // get the users bids
 
-export const YourBidsCard = ({title, bidAmount, numOfBids, Image, bidID, userID, auctionID}) => {
+  const [allListings, error1] = useDbData("/listings");
+  const [allAuctions, error2] = useDbData("/auctions");
+  const [allUsers, error3] = useDbData("/users");
 
-    // get the users bids
+  const [updateUser, result1] = useDbUpdate("/users/" + userID);
+  const [updateListing, result2] = useDbUpdate("/listings/" + listingID);
+  const [updateAuction, result3] = useDbUpdate("/auctions/" + auctionID);
 
-    const [allListings, error1] = useDbData("/listings")
-    const [allAuctions, error2] = useDbData("/auctions")
-    const [allUsers, error3] = useDbData("/users")
+  const removeBid = () => {
+    // modify uses, auctions, listings
 
-    const [updateUser, result1] = useDbUpdate("/users/"+userID)
-    const [updateListing, result2] = useDbUpdate("/listings/"+bidID)
-    const [updateAuction, result3] = useDbUpdate("/auctions/"+auctionID)
-    
+    // update listings
+    let currentBids = allListings[listingID].Bids || [];
+    let userBid = {}
 
 
+    currentBids.map(x=>{
+        if (x.id == bidID){
+            userBid = x
+        }
+    })
 
-    const removeBid = () => {
-        // modify uses, auctions, listings
-
-        // update listings
-        let bidAmount = 0
-        let currentBids = allListings[bidID].Bids || [];
-        currentBids.map(x=> {
-            if (x.userID == userID){
-                bidAmount += x.bidAmount
-            }
-        })
-        currentBids = currentBids.filter(x=> x.userID!== userID)
-        updateListing({Bids: currentBids})
-
-        // update the user
-        let currentUserBids = allUsers[userID].myBids || []
-        currentUserBids = currentUserBids.filter(x=> x.bidID !== bidID)
-        updateUser({myBids: currentUserBids})
-    
-
-        // reduce the total raised
-        console.log(auctionID)
-        let currentTotal = allAuctions[auctionID].TotalRaised
-        currentTotal -= bidAmount
         // UPDATE THE AUCTION TOTAL
-        updateAuction({TotalRaised: currentTotal})
-        // current
+
+    let bidAmountArray = []
+    currentBids.map(x=> {
+        bidAmountArray.push(x.bidAmount)
+    })
+
+    bidAmountArray.sort((a,b)=> a-b);
+    let currentTotal = allAuctions[auctionID].TotalRaised;
 
 
-
-        
-
+    if (Math.max(...bidAmountArray) == userBid.bidAmount){
+        if(bidAmountArray.length > 1){
+            let diff = Math.max(...bidAmountArray) - bidAmountArray[bidAmountArray.length-2];
+            currentTotal -= diff
+        }else{
+            currentTotal-= Math.max(...bidAmountArray)
+        }
     }
+    updateAuction({TotalRaised: currentTotal});
+
+
+    currentBids = currentBids.filter(x=> x.id !== bidID);
+    updateListing({ Bids: currentBids });
+
+    // Update user
+    let userBids = allUsers[userID].myBids || []
+    userBids = userBids.filter(x=> x.bidID !== bidID);
+    updateUser({ myBids: userBids });
+
+  };
 
   return (
     <Card className="auction-item-card" style={{ padding: 20 }}>
@@ -71,12 +87,8 @@ export const YourBidsCard = ({title, bidAmount, numOfBids, Image, bidID, userID,
             <div style={{ fontWeight: "bold" }}>{title}</div>
             <div>Your bid: ${bidAmount} </div>
             <div># of bids: {numOfBids} </div>
-            <Button
-              className="mui-btn"
-              variant="contained"
-              onClick={removeBid}
-            >
-             Remove bid
+            <Button className="mui-btn" variant="contained" onClick={removeBid}>
+              Remove bid
             </Button>
           </Stack>
         </Grid>

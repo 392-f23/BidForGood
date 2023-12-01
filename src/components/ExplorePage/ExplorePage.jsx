@@ -16,7 +16,7 @@ const ExplorePage = ({ aucs_list, items_list }) => {
     const [auctionList, setAuctionList] = useState(aucs_list);
 
     useEffect(() => {
-        console.log(aucs_list);
+     
         setAuctionList(aucs_list);
         setFilteredAuctions(aucs_list);
     }, [aucs_list]);

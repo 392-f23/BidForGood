@@ -11,6 +11,8 @@ import { auctionItemData } from "../../data/auctionItems";
 import { useDbData, useDbUpdate } from "../../utilities/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { BidHistory } from "../BidHistory/BidHistory";
+import { v4 as uuidv4 } from "uuid";
+
 
 const AuctionPage = () => {
   const auth = getAuth();
@@ -114,18 +116,22 @@ const AuctionPage = () => {
 
       let currentBids = oldCurrentItem.Bids || [];
       const now = new Date();
-      currentBids.push({
+      let newBid = {
         userID: uid,
         bidAmount: Number(newBidValue),
         time: now,
-      });
-      updateItem(oldCurrentItem);
+        id: uuidv4()
+      }
+      currentBids.push(newBid);
+      updateItem({Bids: currentBids});
+
 
       // Update user
       let currentUser = usersData[uid];
       let currentMyBids = currentUser.myBids || [];
       currentMyBids.push({
-        bidID: oldCurrentItem.id,
+        listingID: oldCurrentItem.id,
+        bidID: newBid.id,
         bidAmount: Number(newBidValue),
       });
       // currentUser.myBids = currentMyBids;
