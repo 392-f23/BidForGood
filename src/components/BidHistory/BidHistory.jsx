@@ -8,19 +8,34 @@ import {
   TableRow,
 } from "@mui/material";
 
-const createData = (bidAmount, bidTime) => {
-  return { bidAmount, bidTime };
-};
+function formatCustomDate(inputDateString) {
+  const inputDate = new Date(inputDateString);
+
+  const options = {
+    day: "numeric",
+    month: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: true,
+  };
+
+  const formatter = new Intl.DateTimeFormat("en-US", options);
+  const formattedDate = formatter.format(inputDate);
+
+  return formattedDate;
+}
 
 export const BidHistory = ({ currentItem }) => {
   const bids = currentItem.Bids;
 
   return (
     <TableContainer>
-      <Table sx={{ maxWidth: "300px" }} aria-label="simple table">
+      <Table sx={{ maxWidth: "280px" }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Bid Amount</TableCell>
+            <TableCell>Bid</TableCell>
             <TableCell>Bid Time</TableCell>
           </TableRow>
         </TableHead>
@@ -29,7 +44,7 @@ export const BidHistory = ({ currentItem }) => {
             bids.map((bid) => (
               <TableRow key={bid.id}>
                 <TableCell>${bid.bidAmount}</TableCell>
-                <TableCell>{bid.time}</TableCell>
+                <TableCell>{formatCustomDate(bid.time)}</TableCell>
               </TableRow>
             ))
           ) : (
