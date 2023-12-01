@@ -1,20 +1,35 @@
 import { Button, Card, Grid, Stack } from "@mui/material";
 import React from "react";
 import "./AuctionItemCard.css";
+import { useAuth, useDbData, useDbUpdate } from "../../utilities/firebase";
 
 export const AuctionItemCard = ({
   handleOpenBid,
   auctionItemInfo,
   setCurrentItemID,
+  handleClickOpenBidHistory,
 }) => {
   const title = auctionItemInfo.Name;
-  const numberOfBids = auctionItemInfo.NumberBids;
-  const currentBid = auctionItemInfo.CurrentBid;
   const itemImage = auctionItemInfo.Image;
+  const bids = auctionItemInfo.Bids;
+  let highestBid = 0;
 
+  if (bids) {
+    bids.forEach((bid) => {
+      highestBid = Math.max(highestBid, bid.bidAmount);
+    });
+  }
+
+  const openBidHistory = () => {
+    setCurrentItemID(auctionItemInfo.id);
+    handleClickOpenBidHistory();
+  };
   const placeBid = () => {
     setCurrentItemID(auctionItemInfo.id);
     handleOpenBid();
+
+    //  update users bids collection
+    // {user: {bids: []}}
   };
 
   return (
@@ -32,8 +47,12 @@ export const AuctionItemCard = ({
         <Grid item xs={7}>
           <Stack gap={2}>
             <div style={{ fontWeight: "bold" }}>{title}</div>
-            <div>Current bid: ${currentBid} </div>
-            <div># of bids: {numberOfBids} </div>
+            <div>Highest bid: ${highestBid}</div>
+            <Button onClick={() => openBidHistory()}>
+              {bids
+                ? `${bids.length} ${bids.length == 1 ? "bid" : "bids"}`
+                : "No bids"}
+            </Button>
             <Button
               className="mui-btn"
               variant="contained"

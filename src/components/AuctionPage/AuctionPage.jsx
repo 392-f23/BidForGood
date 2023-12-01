@@ -9,10 +9,17 @@ import InfoDialog from "../Dialog/Dialog";
 import DialogContentText from "@mui/material/DialogContentText";
 import { auctionItemData } from "../../data/auctionItems";
 import { useDbData, useDbUpdate } from "../../utilities/firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { BidHistory } from "../BidHistory/BidHistory";
+import { v4 as uuidv4 } from "uuid";
 
 const AuctionPage = () => {
+  const auth = getAuth();
+  const [uid, setUid] = useState("");
   const auctionInfo = useLocation().state;
   const [openBid, setOpenBid] = useState(false);
+  const [openBidHistory, setOpenBidHistory] = useState(false);
+
   const [auctionItems, setAuctionItems] = useState([]);
   const [currentItemID, setCurrentItemID] = useState("");
   const [items_list, error1] = useDbData(`/listings`);
@@ -20,8 +27,30 @@ const AuctionPage = () => {
   const [updateItem, result2] = useDbUpdate(`/listings/${currentItemID}`);
   const [currentAuction, error3] = useDbData(`/auctions/${auctionInfo.id}`);
   const [updateAuction, result3] = useDbUpdate(`/auctions/${auctionInfo.id}`);
+  const [usersData, error9] = useDbData("/users");
+
   const [newBidValue, setNewBidValue] = useState(null);
   const [error, setError] = useState(false);
+
+  // Update User
+  // Update Listing
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUid(user.uid);
+      } else {
+        console.log("auth errors out.");
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const [updateUser, result4] = useDbUpdate(`/users/${uid}`);
+
+  // console.log(userData)
+  // const [userData, result] = useDbData("/users/"+ user ?user.uid: "");
+  // const [updateUserData, error10] = useDbUpdate("/users/"+user && user.uid?user.uid: "");
 
   useEffect(() => {
     if (items_list) {
@@ -32,7 +61,7 @@ const AuctionPage = () => {
   }, [items_list]);
 
   const setBidState = (state) => {
-    if (state >= currentItem.CurrentBid) {
+    if (state >= getHighestBid(currentItem)) {
       setError(false);
       setNewBidValue(state);
     } else {
@@ -54,19 +83,68 @@ const AuctionPage = () => {
     setOpenBid(false);
   };
 
+  const handleClickOpenBidHistory = () => {
+    setOpenBidHistory(true);
+  };
+
+  const handleCloseBidHistory = () => {
+    setOpenBidHistory(false);
+  };
+
+  const getHighestBid = (listing) => {
+    const bids = listing.Bids;
+    let highestBid = 0;
+
+    if (bids) {
+      bids.forEach((bid) => {
+        highestBid = Math.max(highestBid, bid.bidAmount);
+      });
+    }
+
+    return highestBid;
+  };
+
   const placeBid = () => {
-    if (Number(newBidValue) > currentItem.CurrentBid) {
+    if (Number(newBidValue) > getHighestBid(currentItem)) {
       setError(false);
       let oldCurrentItem = currentItem;
       let oldCurrentAuction = currentAuction;
       oldCurrentAuction.TotalRaised =
         oldCurrentAuction.TotalRaised +
-        (newBidValue - oldCurrentItem.CurrentBid);
-      oldCurrentItem.CurrentBid = Number(newBidValue);
-      oldCurrentItem.NumberBids = oldCurrentItem.NumberBids + 1;
-      updateItem(oldCurrentItem);
+        (newBidValue - getHighestBid(currentItem));
+
+      let currentBids = oldCurrentItem.Bids || [];
+      const now = new Date();
+      let newBid = {
+        userID: uid,
+        bidAmount: Number(newBidValue),
+        time: now,
+        id: uuidv4(),
+      };
+      currentBids.push(newBid);
+      updateItem({ Bids: currentBids });
+
+      // Update user
+      let currentUser = usersData[uid];
+      let currentMyBids = currentUser.myBids || [];
+      currentMyBids.push({
+        listingID: oldCurrentItem.id,
+        bidID: newBid.id,
+        bidAmount: Number(newBidValue),
+      });
+      // currentUser.myBids = currentMyBids;
+
+      updateUser({ myBids: currentMyBids });
+
       updateAuction(oldCurrentAuction);
       setNewBidValue(newBidValue);
+
+      // let userBids = userData.bids || [];
+      // userBids.push(auctionInfo.id)
+      // // updateUserData({bids: userBids});
+
+      // console.log("working")
+
       handleCloseBid();
     } else {
       setError(true);
@@ -102,8 +180,8 @@ const AuctionPage = () => {
     <Container style={{ margin: 0, padding: 0 }}>
       <InfoDialog
         title={
-          "Place Bid - Current Bid ($" +
-          (currentItem ? currentItem.CurrentBid : 0) +
+          "Place Bid - Highest Bid ($" +
+          (currentItem ? getHighestBid(currentItem) : 0) +
           ")"
         }
         open={openBid}
@@ -137,6 +215,13 @@ const AuctionPage = () => {
           </Stack>
         </div>
       </InfoDialog>
+      <InfoDialog
+        title="Bid History"
+        open={openBidHistory}
+        handleClose={handleCloseBidHistory}
+      >
+        <BidHistory currentItem={currentItem} />
+      </InfoDialog>
       <Stack gap={1} style={{ textAlign: "center", marginBottom: 20 }}>
         <h2 style={{ marginBottom: 0, marginTop: 0 }}>{orgName}</h2>
         <div>EVENT | {auctionTitle.toUpperCase()}</div>
@@ -155,6 +240,7 @@ const AuctionPage = () => {
             handleOpenBid={handleClickOpenBid}
             auctionItemInfo={x}
             setCurrentItemID={setCurrentItemID}
+            handleClickOpenBidHistory={handleClickOpenBidHistory}
           />
         ))}
       </Stack>
